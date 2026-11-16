@@ -1,0 +1,286 @@
+{
+  "artifact_kind": "sanitized aggregate evaluation evidence",
+  "schema_version": 1,
+  "raw_source_text_included": false,
+  "queries_answers_contexts_or_pdf_excerpts_included": false,
+  "api_secrets_included": false,
+  "dataset": {
+    "source_pdf_count_present": 9,
+    "source_files_expected": 10,
+    "pages": 389,
+    "v1_chunks": 420,
+    "v2_chunks": 332,
+    "needs_review_chunks": 256,
+    "redistribution_rights": "requires verification"
+  },
+  "benchmark": {
+    "dev_questions": 17,
+    "dev_answerable": 15,
+    "dev_missing_evidence": 2,
+    "test_questions": 7,
+    "test_answerable": 5,
+    "test_missing_evidence": 2,
+    "dev_sha256": "84db26d01f9f4d5c3589f3f433d9a0c62a1db22feda079553755a32fbd3416ac",
+    "test_sha256": "3f267ab60758d16351c4e26167e3adb730df8afab5dd983e9db5eb1fa50fc384",
+    "corpus_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990"
+  },
+  "retrieval_dev": {
+    "dense": {
+      "hit_at_1": {
+        "n": 9,
+        "N": 15,
+        "rate": 0.6
+      },
+      "evidence_hit_at_3": {
+        "n": 11,
+        "N": 15,
+        "rate": 0.7333333333333333
+      },
+      "context_evidence_rate": {
+        "n": 11,
+        "N": 15,
+        "rate": 0.7333333333333333
+      },
+      "median_retrieval_ms": 65.587
+    },
+    "tfidf": {
+      "hit_at_1": {
+        "n": 12,
+        "N": 15,
+        "rate": 0.8
+      },
+      "evidence_hit_at_3": {
+        "n": 13,
+        "N": 15,
+        "rate": 0.8666666666666667
+      },
+      "context_evidence_rate": {
+        "n": 13,
+        "N": 15,
+        "rate": 0.8666666666666667
+      },
+      "median_retrieval_ms": 2.307
+    },
+    "hybrid_rrf": {
+      "hit_at_1": {
+        "n": 11,
+        "N": 15,
+        "rate": 0.7333333333333333
+      },
+      "evidence_hit_at_3": {
+        "n": 13,
+        "N": 15,
+        "rate": 0.8666666666666667
+      },
+      "context_evidence_rate": {
+        "n": 12,
+        "N": 15,
+        "rate": 0.8
+      },
+      "median_retrieval_ms": 71.786
+    }
+  },
+  "context_dev": {
+    "C0": {
+      "context_evidence_rate": {
+        "count": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      },
+      "manual_quality_counts_0_1_2": [
+        2,
+        0,
+        13
+      ],
+      "mean_grade_out_of_2": 1.7333333333333334,
+      "mean_context_chars": 701
+    },
+    "C1": {
+      "context_evidence_rate": {
+        "count": 12,
+        "total": 15,
+        "rate": 0.8
+      },
+      "manual_quality_counts_0_1_2": [
+        2,
+        1,
+        12
+      ],
+      "mean_grade_out_of_2": 1.6666666666666667,
+      "mean_context_chars": 700.1764705882352
+    }
+  },
+  "retrieval_a2_dev": {
+    "R0": {
+      "hit_at_1": {
+        "count": 12,
+        "total": 15,
+        "rate": 0.8
+      },
+      "evidence_hit_at_3": {
+        "count": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      },
+      "context_evidence_rate": {
+        "count": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      }
+    },
+    "R1": {
+      "hit_at_1": {
+        "count": 11,
+        "total": 15,
+        "rate": 0.7333333333333333
+      },
+      "evidence_hit_at_3": {
+        "count": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      },
+      "context_evidence_rate": {
+        "count": 12,
+        "total": 15,
+        "rate": 0.8
+      }
+    },
+    "R2": {
+      "hit_at_1": {
+        "count": 12,
+        "total": 15,
+        "rate": 0.8
+      },
+      "evidence_hit_at_3": {
+        "count": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      },
+      "context_evidence_rate": {
+        "count": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      }
+    }
+  },
+  "agent_a1": {
+    "model_request": "z-ai/glm-5.3-flash:floor",
+    "retriever": "TF-IDF Top-3 R0",
+    "context": "C0 <= 800 Unicode chars",
+    "max_repairs_per_case": 1,
+    "dev": {
+      "grounded_answer_rate": {
+        "n": 12,
+        "N": 15,
+        "rate": 0.8
+      },
+      "citation_structure_valid_answers": {
+        "n": 12,
+        "N": 12,
+        "rate": 1.0
+      },
+      "semantic_citation_support_references": {
+        "n": 13,
+        "N": 13,
+        "rate": 1.0
+      },
+      "abstention_accuracy": {
+        "n": 2,
+        "N": 2,
+        "rate": 1.0
+      },
+      "false_refusal": {
+        "n": 3,
+        "N": 15,
+        "rate": 0.2
+      },
+      "tool_use": {
+        "n": 17,
+        "N": 17
+      },
+      "mean_latency_ms": 3626.771,
+      "median_latency_ms": 3318.69,
+      "tokens": {
+        "input": 16371,
+        "output": 4401,
+        "total": 20772
+      },
+      "api_calls": 35,
+      "actual_cost_usd": 0.0013042941
+    },
+    "test": {
+      "grounded_answer_rate": {
+        "n": 3,
+        "N": 5,
+        "rate": 0.6
+      },
+      "citation_structure_valid_final_answers": {
+        "n": 3,
+        "N": 3
+      },
+      "semantic_citation_support_final_references": {
+        "n": 3,
+        "N": 3
+      },
+      "abstention_accuracy": {
+        "count": 2,
+        "total": 2
+      },
+      "false_refusal": {
+        "count": 2,
+        "total": 5
+      },
+      "tool_use": {
+        "count": 7,
+        "total": 7
+      },
+      "mean_latency_ms": 4951.952614285541,
+      "median_latency_ms": 4501.7619000000195,
+      "tokens": {
+        "prompt_tokens": 7877,
+        "completion_tokens": 2486,
+        "total_tokens": 10363
+      },
+      "api_calls": 16,
+      "actual_cost_usd": 0.0006918935,
+      "provider_counts": {
+        "Relace": 7,
+        "Wafer": 9
+      },
+      "test_executions": 1
+    },
+    "test_manual_case_outcomes": [
+      {
+        "id": "t01",
+        "outcome": "grounded_answer"
+      },
+      {
+        "id": "t02",
+        "outcome": "false_refusal_citation_repair_failure"
+      },
+      {
+        "id": "t03",
+        "outcome": "grounded_answer"
+      },
+      {
+        "id": "t04",
+        "outcome": "false_refusal_citation_repair_failure"
+      },
+      {
+        "id": "t05",
+        "outcome": "grounded_answer"
+      },
+      {
+        "id": "t06",
+        "outcome": "correct_abstention"
+      },
+      {
+        "id": "t07",
+        "outcome": "correct_abstention"
+      }
+    ]
+  },
+  "test_run_id": "agent-a1-final-test-20261116T082303799998Z",
+  "test_run_manifest_sha256": "06d136b97474cde93f0b140d0ca098196114cd77138a34300a4fe9d9cc4e21a6",
+  "note": "Raw traces and full API manifest remain local because they include source-derived context and account metadata. Source redistribution rights are not independently documented in this repository."
+}

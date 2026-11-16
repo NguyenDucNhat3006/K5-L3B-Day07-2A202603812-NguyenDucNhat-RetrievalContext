@@ -1,0 +1,57 @@
+{
+  "artifact_kind": "sanitized final test configuration manifest",
+  "run_id": "agent-a1-final-test-20261116T082303799998Z",
+  "created_utc": "2026-11-16T08:23:03.799998+00:00",
+  "split": "test",
+  "one_pass_only": true,
+  "configuration": {
+    "agent": "A1",
+    "retriever": "R0 TF-IDF Top-3",
+    "context": "C0 <=800 Unicode characters",
+    "model": "z-ai/glm-5.3-flash:floor",
+    "provider_routing": "OpenRouter; model :floor route; require_parameters; configured provider.max_price",
+    "corpus": "Discrete Math V2",
+    "chunk_count": 332,
+    "max_repairs_per_question": 1,
+    "max_completion_tokens_per_call": 300
+  },
+  "limits": {
+    "max_api_calls": 21,
+    "max_total_tokens": 20000,
+    "max_cost_usd": 0.1
+  },
+  "configured_price_caps_usd_per_million": {
+    "input": 0.042,
+    "output": 0.184
+  },
+  "hashes": {
+    "test_benchmark_sha256": "3f267ab60758d16351c4e26167e3adb730df8afab5dd983e9db5eb1fa50fc384",
+    "corpus_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+    "benchmark_manifest_sha256": "21c1aeaeb24294d4e1c790cf50c92b92e1493c5bcef82f84a97455efdbde88bb",
+    "source_files_sha256": {
+      "starter\\agent_a1.py": "5a697b5a64d1a35022eac5c656ac620274a19c097e9916da88f40cb5c90ee8b6",
+      "starter\\agent_v2.py": "a16a66362029ef246a3117d61246ca9cbe4ffa88e5267a55d3103b0249b1a4ad",
+      "starter\\context_engineering_v2.py": "8c6c568db2bc2e6f36236788bdd5801eeed1c8ea2ad86c9eeb9c8ba789fb25b9",
+      "starter\\retrieval_v2.py": "a9b647335c65e3b4bf012e8abc271347df82d0e1831bf6d19a991a937ca5b58c",
+      "starter\\baseline.py": "cf51d4f4dd5412270d73b51cb117eef5329695fc8fd8eb637de050b3d6488c36",
+      "starter\\run_agent_a1_test.py": "1c47ecb1c054ec91394e249400c55a3668270d964b126f9e71a99e8819e3e273"
+    },
+    "a1_system_prompt_sha256": "5959f7354c1fc8eaf62fe0ddfef87bebf79a76ae0e340b5bfc54dffc157b479c",
+    "a1_repair_prompt_sha256": "50ad60b9b3e989bf06531c88ef32a0ae0d810a843139067632a71bbf19d3637c"
+  },
+  "permission_status": "User attested prior permission for external evaluation; repository source redistribution license remains unverified.",
+  "raw_questions_answers_contexts_or_secrets_included": false,
+  "database_accessed": false,
+  "database_written": false,
+  "embeddings_created": 0,
+  "test_benchmark_opened": true,
+  "test_questions_sent_once": true,
+  "run_status": "complete",
+  "sha256_of_full_local_manifest": "06d136b97474cde93f0b140d0ca098196114cd77138a34300a4fe9d9cc4e21a6",
+  "local_artifact_hashes": {
+    "traces.json": "c4eba87307e553f8b982eea56fd074aa9c44e14c890eb666311be5d5a17a9e22",
+    "metrics_auto.json": "5a2a5f0bf4865a708310d78996de8fcb2dc9ee8f0eed98b2a8ac9da01006838b",
+    "audit_manual.json": "3d8c14228dd4b62dfbedab89dfe379ca7c8a669c97c589c248eb94e861a42e32",
+    "manifest.json": "06d136b97474cde93f0b140d0ca098196114cd77138a34300a4fe9d9cc4e21a6"
+  }
+}

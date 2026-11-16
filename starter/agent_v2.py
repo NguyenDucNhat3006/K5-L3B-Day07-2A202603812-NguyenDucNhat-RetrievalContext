@@ -7,7 +7,6 @@ No benchmark labels enter this module.
 from __future__ import annotations
 
 import json
-import os
 import re
 import time
 from typing import Any
@@ -28,35 +27,57 @@ TOOL = {"type": "function", "function": {"name": "search_discrete_math",
         "parameters": {"type": "object", "properties": {}, "additionalProperties": False}}}
 
 
-class OpenAIChatClient:
-    """Minimal Chat Completions adapter; no third-party dependency or key logging."""
+class OpenRouterChatClient:
+    """OpenRouter Chat Completions adapter; no key logging or third-party SDK."""
 
-    def __init__(self, model: str, api_key: str, timeout: int = 45):
+    def __init__(self, model: str, api_key: str, timeout: int = 45, *,
+                 base_url: str = "https://openrouter.ai/api/v1",
+                 max_price: tuple[float, float] | None = None):
         if not model or not api_key:
-            raise ValueError("LAB07_LLM_MODEL and OPENAI_API_KEY are required")
+            raise ValueError("LAB07_LLM_MODEL and OPENROUTER_API_KEY are required")
+        if base_url.rstrip("/") not in ("https://openrouter.ai/api/v1", "https://eu.openrouter.ai/api/v1"):
+            raise ValueError("LAB07_LLM_BASE_URL must be an official OpenRouter API endpoint")
         self.model, self.api_key, self.timeout = model, api_key, timeout
+        self.base_url, self.max_price = base_url.rstrip("/"), max_price
 
     def complete(self, messages: list[dict], *, tools: list[dict] | None = None,
                  max_tokens: int = 400, json_mode: bool = False) -> dict:
         body: dict[str, Any] = {"model": self.model, "messages": messages,
-                                "max_completion_tokens": max_tokens}
+                                "max_tokens": max_tokens,
+                                "usage": {"include": True},
+                                "provider": {"require_parameters": True}}
+        if self.max_price is not None:
+            body["provider"]["max_price"] = {"prompt": self.max_price[0],
+                                               "completion": self.max_price[1]}
         if tools:
-            body.update({"tools": tools, "tool_choice": "auto", "parallel_tool_calls": False})
+            body.update({"tools": tools, "tool_choice": "auto"})
         if json_mode:
             body["response_format"] = {"type": "json_object"}
-        req = Request("https://api.openai.com/v1/chat/completions",
+        req = Request(self.base_url + "/chat/completions",
                       data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
                       headers={"Authorization": f"Bearer {self.api_key}",
-                               "Content-Type": "application/json"}, method="POST")
+                               "Content-Type": "application/json",
+                               "X-OpenRouter-Metadata": "enabled"}, method="POST")
         try:
             with urlopen(req, timeout=self.timeout) as response:
                 result = json.load(response)
         except HTTPError as exc:
-            raise RuntimeError(f"LLM HTTP {exc.code}; request failed") from exc
+            try:
+                payload = json.loads(exc.read().decode("utf-8"))
+                detail = str((payload.get("error") or {}).get("message") or "request failed")
+            except (ValueError, UnicodeError, AttributeError):
+                detail = "request failed"
+            detail = detail.replace(self.api_key, "[redacted]")[:300]
+            raise RuntimeError(f"LLM HTTP {exc.code}: {detail}") from None
         except URLError as exc:
             raise ConnectionError("LLM API unavailable") from exc
         if not result.get("choices") or not isinstance(result["choices"][0].get("message"), dict):
             raise RuntimeError("LLM response has no assistant message")
+        raw_usage = result.get("usage")
+        if not isinstance(raw_usage, dict) or any(
+                not isinstance(raw_usage.get(key), int) for key in
+                ("prompt_tokens", "completion_tokens", "total_tokens")):
+            raise RuntimeError("LLM response lacks reliable token usage")
         return result
 
 
@@ -66,11 +87,19 @@ def _usage(response: dict) -> dict[str, int]:
             ("prompt_tokens", "completion_tokens", "total_tokens")}
 
 
+def _provider(response: dict) -> str | None:
+    endpoints = (response.get("openrouter_metadata") or {}).get("endpoints") or {}
+    for endpoint in endpoints.get("available") or []:
+        if endpoint.get("selected"):
+            return endpoint.get("provider")
+    return None
+
+
 def _cost(usage: dict[str, int], rates: tuple[float, float] | None) -> float | None:
     if rates is None:
         return None
     return round((usage["prompt_tokens"] * rates[0] +
-                  usage["completion_tokens"] * rates[1]) / 1_000_000, 8)
+                  usage["completion_tokens"] * rates[1]) / 1_000_000, 10)
 
 
 def validate_answer(answer: str, citations: list[dict], selected: list[dict]) -> tuple[bool, str]:
@@ -111,7 +140,13 @@ def run_v2_agent(question: str, suite: Any, client: Any, *,
                 {"role": "user", "content": question}]
     events: list[dict] = []
     usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+    actual_costs: list[float] = []
+    api_responses: list[dict] = []
     first = client.complete(messages, tools=[TOOL], max_tokens=max_tokens_per_call)
+    api_responses.append({"id": first.get("id"), "model": first.get("model"),
+                          "provider": _provider(first), "usage": first.get("usage")})
+    if isinstance((first.get("usage") or {}).get("cost"), (int, float)):
+        actual_costs.append(float(first["usage"]["cost"]))
     for key, value in _usage(first).items():
         usage[key] += value
     decision = first["choices"][0]["message"]
@@ -152,6 +187,10 @@ def run_v2_agent(question: str, suite: Any, client: Any, *,
                                      "content": context + "\n\nTrả lời JSON với keys status ('answered' hoặc 'abstain'), answer, citations (array {chunk_id, source, page})."})
                     second = client.complete(messages, max_tokens=max_tokens_per_call,
                                              json_mode=True)
+                    api_responses.append({"id": second.get("id"), "model": second.get("model"),
+                                          "provider": _provider(second), "usage": second.get("usage")})
+                    if isinstance((second.get("usage") or {}).get("cost"), (int, float)):
+                        actual_costs.append(float(second["usage"]["cost"]))
                     for key, value in _usage(second).items():
                         usage[key] += value
                     raw = second["choices"][0]["message"].get("content") or ""
@@ -177,5 +216,7 @@ def run_v2_agent(question: str, suite: Any, client: Any, *,
              "context_ids": ids, "status": status, "answer": answer,
              "citations": citations, "abstention": status == "abstain",
              "reason": reason, "latency_ms": (time.perf_counter() - started) * 1000,
-             "token_usage": usage, "estimated_cost_usd": _cost(usage, rates_usd_per_million)}
+             "token_usage": usage, "api_responses": api_responses,
+             "actual_cost_usd": round(sum(actual_costs), 10) if len(actual_costs) == len(api_responses) else None,
+             "estimated_cost_usd": _cost(usage, rates_usd_per_million)}
     return trace

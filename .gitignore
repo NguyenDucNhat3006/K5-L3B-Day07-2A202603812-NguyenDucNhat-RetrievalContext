@@ -10,3 +10,8 @@ __pycache__/
 starter/data/
 starter/results/
 data/discrete_math/raw/
+
+# Local detailed API/audit artifacts can contain source-derived excerpts.
+report/individual/agent_a1_audit_dev.json
+report/individual/agent_audit_dev_*.json
+report/individual/agent_api_smoke_*.md
