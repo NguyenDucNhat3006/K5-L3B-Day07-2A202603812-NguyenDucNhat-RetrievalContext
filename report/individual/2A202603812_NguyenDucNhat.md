@@ -47,7 +47,7 @@ Model request: `z-ai/glm-5.3-flash:floor` qua OpenRouter; provider endpoint có 
 
 ## 5. Cải thiện A1 và A2
 
-Baseline agent A0 đạt 9/15 grounded answer và false refusal 6/15 trên dev. A1 thêm JSON/citation guidance và tối đa một repair, đạt 12/15 (80%) và false refusal 3/15; giữ nguyên retrieval/context/model. A1 không chữa được lỗi d01/d03 do thiếu evidence trong Top-3, còn d14 là citation repair failure.
+Baseline agent A0 đạt 9/15 grounded answer và false refusal 6/15 trên dev. Kiểm kê trace không tìm thấy A0 test run; do đó không có so sánh A0/A1 trên cùng test và không suy ra A0 test GAR từ dev. Chạy A0 trên test đã mở chỉ là so sánh hậu nghiệm, không độc lập; đánh giá độc lập cần test set mới chưa mở. A1 thêm JSON/citation guidance và tối đa một repair, đạt 12/15 (80%) và false refusal 3/15; giữ nguyên retrieval/context/model. A1 không chữa được lỗi d01/d03 do thiếu evidence trong Top-3, còn d14 là citation repair failure.
 
 A2 so sánh trên dev với R0 gốc, R1 query expansion bằng từ vựng Discrete Math chung, R2 mở rộng candidate Top-30 từ truy vấn gốc/mở rộng rồi rerank bằng RRF. Không hardcode câu hỏi hoặc vị trí gold. Kết quả:
 
@@ -65,7 +65,7 @@ R1 không cải thiện baseline. R2 đưa d14 lên Top-1 nhưng không tăng me
 |---|---:|---:|
 | Grounded Answer Rate | 12/15 (80%) | 3/5 (60%) |
 | Citation structure hợp lệ trong câu trả lời cuối | 12/12 | 3/3 |
-| Citation semantic support | 13/13 citation references theo audit dev | 3/3 citation references trong câu trả lời cuối trên test |
+| Citation semantic support | 13/13 citation references theo audit dev | 3/3 citation references trong câu trả lời cuối trên test có hỗ trợ semantic theo audit; draft t02/t04 có evidence nhưng bị verifier từ chối |
 | Abstention đúng | 2/2 | 2/2 |
 | False refusal | 3/15 (20%) | 2/5 (40%) |
 | Tool use | 17/17 | 7/7 |

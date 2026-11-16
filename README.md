@@ -1,40 +1,49 @@
-# Lab 07 — Agentic RAG
+# Lab 07 - Retrieval & Context Engineering
 
-## Kết quả nộp bài
+This repository contains the Day 07 Discrete Math retrieval and agent submission for the L3B repository. It reuses the Day 06 MiniLM embedding model and pgvector setup, with a separate Lab 07 corpus/index strategy.
 
-Pipeline dùng 332 chunks Cấu trúc rời rạc V2. Cấu hình được chọn trên dev: **Agent A1 + TF-IDF Top-3 (R0) + C0 800 ký tự + GLM-5.3-Flash qua OpenRouter**.
+## Final evaluated configuration
 
-| Split | Grounded Answer Rate | Abstention đúng | Tool use | Chi phí API |
+- Corpus: Discrete Math V2, 332 chunks from 9 PDFs / 389 physical pages. The expected tenth Chapter 3 PPT/PPTX is not present and was not reconstructed.
+- Embeddings: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, 384 dimensions; PostgreSQL 16 + pgvector, cosine distance, strategy `D07_discrete_math_v2`.
+- Retrieval methods compared on dev: Dense pgvector, TF-IDF, and Hybrid RRF over the same chunk IDs and metadata. A2 R1 query expansion and R2 candidate expansion/reranking did not improve the overall dev baseline; TF-IDF R0 was retained.
+- Context: C0 preserves TF-IDF Top-3 order within 800 Unicode characters. C1 was compared offline; C0 had better saved dev context coverage/quality.
+- Agent: A1 uses actual OpenRouter function/tool calling for TF-IDF retrieval, citation validation, and at most one repair. Citation format validation and semantic source support are scored separately.
+
+| Split | Grounded answer | Correct abstention | Tool use | Actual API cost |
 |---|---:|---:|---:|---:|
-| Dev, 17 câu | 12/15 (80%) | 2/2 | 17/17 | $0.0013042941 |
-| Test, 7 câu, chạy một lần | 3/5 (60%) | 2/2 | 7/7 | $0.0006918935 |
+| Dev (17; 15 answerable) | 12/15 (80%) | 2/2 | 17/17 | $0.0013042941 |
+| Test (7; 5 answerable), one pass | 3/5 (60%) | 2/2 | 7/7 | $0.0006918935 |
 
-Hai false refusal trên test (t02, t04) có evidence trong context; câu trả lời draft bị citation validator từ chối do thiếu citation inline ở một câu. Không điều chỉnh cấu hình sau test. Xem [báo cáo cá nhân](report/individual/2A202603812_NguyenDucNhat.md), [audit final test](report/individual/agent_final_evaluation_test.md) và [checklist nộp bài](SUBMISSION_CHECKLIST.md).
+Final test also used 16 LLM calls (including two repairs), 10,363 tokens, and mean/median latency 4.952/4.502 seconds. The A1 final test was run exactly once. Do not rerun it or use its outcomes to tune the configuration. See [the per-case audit](report/individual/agent_final_evaluation_test.md), [sanitized trace](artifacts/final_test_trace_sanitized.json), and [public manifest](artifacts/final_test_manifest_public.json). The complete raw trace remains local and ignored.
 
-## Thành phần và báo cáo
+## Setup and commands
 
-- [Hướng dẫn cài đặt/chạy](starter/README.md)
-- [Benchmark và cách chấm](BENCHMARK.md), [rubric](RUBRIC.md), [quy tắc](RULES.md), [hướng dẫn bài](GUIDE.md)
-- [So sánh Dense, TF-IDF và Hybrid RRF](report/individual/retrieval_v2_dev_comparison.md)
-- [Context C0/C1](report/individual/context_engineering_dev.md)
-- [A1 dev](report/individual/agent_evaluation_dev.md)
-- [A2 retrieval dev](report/individual/retrieval_a2_dev.md)
-- [Final test audit](report/individual/agent_final_evaluation_test.md)
-- [Metrics tổng hợp đã loại bỏ nội dung nguồn](artifacts/final_evaluation_public.json)
-- [Trace Final Test đã khử nội dung nguồn](artifacts/final_test_trace_sanitized.json)
-
-## Dataset và quyền sử dụng
-
-Corpus V2 được trích từ 9 PDF (389 trang vật lý có trong thư mục nguồn), tạo 332 chunks. Bộ benchmark gồm 17 câu dev (15 answerable, 2 thiếu evidence) và 7 câu test (5 answerable, 2 thiếu evidence). Model embedding: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, 384 chiều; vector V2 nằm trong PostgreSQL 16 + pgvector, strategy riêng `D07_discrete_math_v2`. Các strategy A/B của Lab 06 được giữ nguyên.
-
-Chỉ có 9 PDF trong thư mục nguồn (389 trang vật lý); file PPT/PPTX thứ 10 dự kiến cho Chương 3 chưa có để đối chiếu. Công thức, ma trận, bảng và hình có giới hạn trích xuất; 256/332 chunk mang `needs_review`. Theo xác nhận của người nộp, giáo viên đã cho phép sử dụng tài liệu trong phạm vi học phần/Lab 07 và nộp bài cho giảng viên. Xác nhận đó không tự mở rộng thành quyền công khai toàn bộ PDF, chunks hoặc trích đoạn. Repo GitHub hiện public và một số benchmark/audit chứa evidence text trích từ nguồn; cần xác nhận riêng rằng phạm vi cho phép bao gồm các file này trước khi coi repo public là phù hợp. Xem checklist quyền dữ liệu. Không đưa PDF, raw traces/context hoặc secrets lên GitHub.
-
-## Kiểm thử
+See [starter setup and reproducibility guide](starter/README.md) for Python 3.12, package groups, environment variables, PostgreSQL, ingestion, retrieval, agent, and evaluation commands. Unit tests do not call the LLM or run the benchmark:
 
 ```powershell
 python -m unittest discover -s tests -v
 python -m compileall -q starter tests
-git diff --check
 ```
 
-Artifacts đầy đủ có nội dung retrieved/context/API nằm trong `starter/results/` và bị ignore có chủ đích; metrics tổng hợp sạch được lưu trong `artifacts/`. Không force-add raw results. Final test đã chạy một lần; không chạy lại `starter/run_agent_a1_test.py`.
+Live retrieval requires the Lab 06 Python environment, PostgreSQL 16 with pgvector, and the local V2 chunk file. LLM calls additionally need an OpenRouter key and explicit permission for external corpus use. The saved final test must not be rerun.
+
+## Experiment reports
+
+- [Personal report](report/individual/2A202603812_NguyenDucNhat.md)
+- [Dense, TF-IDF, and Hybrid RRF dev comparison](report/individual/retrieval_v2_dev_comparison.md)
+- [C0/C1 context engineering](report/individual/context_engineering_dev.md)
+- [A1 agent dev evaluation](report/individual/agent_evaluation_dev.md)
+- [A2 R0/R1/R2 dev comparison](report/individual/retrieval_a2_dev.md)
+- [Final test audit and case telemetry](report/individual/agent_final_evaluation_test.md)
+- [Submission readiness review](report/individual/submission_readiness_review.md)
+
+## Data and permission scope
+
+The submitter reports that the instructor authorized using the course documents for Lab 07 and submission to the instructor. This does **not** establish permission to publicly redistribute complete PDFs, all extracted chunks, or arbitrary excerpts. The GitHub repository is public and source-derived evidence is present in tracked benchmark/audit artifacts; those files and their public scope still require confirmation. Original PDFs and raw traces are not tracked. See [submission checklist](SUBMISSION_CHECKLIST.md) and [submission readiness review](report/individual/submission_readiness_review.md). No source license or blanket redistribution permission is claimed. PDF extraction can lose formula, matrix, table, and diagram structure; chunks marked `needs_review` must not be treated as reconstructed visual evidence.
+
+## Submission references
+
+- [Personal report](report/individual/2A202603812_NguyenDucNhat.md)
+- [Submission checklist](SUBMISSION_CHECKLIST.md)
+- [Official GUIDE](GUIDE.md) | [BENCHMARK](BENCHMARK.md) | [RUBRIC](RUBRIC.md) | [RULES](RULES.md) | [SUBMISSION](SUBMISSION.md)

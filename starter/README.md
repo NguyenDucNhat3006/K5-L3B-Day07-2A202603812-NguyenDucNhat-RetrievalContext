@@ -1,123 +1,85 @@
-# Starter và lệnh chạy Lab 07
+# Lab 07 starter: ingestion, retrieval, context, and agent
 
-Tài liệu này hướng dẫn chạy phần ingestion, retrieval, context và agent theo trạng thái hiện tại. Đọc [README gốc](../README.md), [GUIDE](../GUIDE.md), [BENCHMARK](../BENCHMARK.md), [RUBRIC](../RUBRIC.md), [RULES](../RULES.md) và [checklist nộp](../SUBMISSION_CHECKLIST.md) trước khi chia sẻ repository.
+Run the commands from the repository root unless a command explicitly changes directory. This is the implementation guide for the L3B Day 07 submission. Use Python 3.12 for V2 preparation/tests and the Lab 06 environment for model embeddings and PostgreSQL access. All commands below are examples; **the final test command is deliberately omitted** because that locked test was already run once.
 
-## 1. Môi trường
+## Architecture and data
 
-- Python 3.12 cho ingestion V2 và tests hiện tại.
-- Dense/Hybrid và indexing cần môi trường Python của Lab 06 có `sentence-transformers`, `psycopg`/pgvector và kết nối PostgreSQL 16.
-- Agent gọi OpenRouter qua thư viện chuẩn `urllib`; không cần SDK riêng.
-- Các PDF nguồn, chunks đã sinh, database và traces có nội dung nguồn là tài nguyên local. Không tải lên Git nếu chưa xác minh quyền phân phối.
+- Ingestion: 9 source PDFs, 389 physical pages; V1 has 420 chunks and reviewed V2 has 332. The expected Chapter 3 PPT/PPTX tenth source file is absent. V2 preserves chunk/source IDs, source path, page, and metadata (`subject`, `chapter`, `content_type`, `extraction_quality`).
+- Embeddings: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, 384 dimensions. V2 is stored in PostgreSQL 16 + pgvector with cosine distance under `D07_discrete_math_v2`; Lab 06 A/B strategies are separate.
+- Retrieval: Dense pgvector, TF-IDF, and Hybrid Reciprocal Rank Fusion (RRF) share the 332 V2 chunks and citations. C filtering is SQL-level in the Dense implementation where used. TF-IDF is local lexical ranking.
+- Context: C0 takes the original TF-IDF Top-3 in rank order up to 800 Unicode characters. C1 is evidence-aware packing from the same retrieved candidates. Saved dev comparison favored C0; A2 R1/R2 did not improve aggregate dev retrieval, so the frozen agent uses R0/C0.
+- Agent: A1 uses OpenRouter chat function calling. The model decides to invoke `search_discrete_math`; that tool runs TF-IDF Top-3 and C0. Citation structure is validated against context chunk IDs/source/pages; semantic entailment requires human source audit. One repair maximum reuses the same context.
 
-Tạo môi trường Lab 07 và cài parser:
+## Environment and setup
+
+Create the Python 3.12 environment and install the ingestion/test dependencies:
 
 ```powershell
 py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r starter\requirements-ingestion-v2.txt
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r starter/requirements-ingestion-v2.txt
+Copy-Item .env.example .env
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Đặt API key/config trong `.env` ở repo root; không commit file này. Biến cần có cho API run:
+The separate `requirements-indexing.txt` is for the established Lab 06 indexing environment compatibility path. Indexing and Dense/Hybrid retrieval also require the Lab 06 Python environment with `sentence-transformers`, `psycopg`/pgvector and its local model cache, plus PostgreSQL 16 with pgvector. Database settings are read by the shared Lab 06 configuration; see `starter/index_discrete_math_v2.py` and the Lab 06 setup. The V2 corpus JSON and original PDFs are local/ignored inputs; Git alone cannot recreate them. No database dump or model weights are included.
 
-```dotenv
-OPENROUTER_API_KEY=...
-LAB07_LLM_MODEL=z-ai/glm-5.3-flash:floor
-LAB07_LLM_BASE_URL=https://openrouter.ai/api/v1
-LAB07_INPUT_USD_PER_1M=0.042
-LAB07_OUTPUT_USD_PER_1M=0.184
-LAB07_EXTERNAL_CORPUS_OK=1
-```
+Configure `.env` locally from [`.env.example`](../.env.example); do not commit it. `OPENROUTER_API_KEY`, `LAB07_LLM_MODEL`, `LAB07_LLM_BASE_URL`, input/output price estimates, and `LAB07_EXTERNAL_CORPUS_OK` control a new API evaluation. `OPENROUTER_API_KEY` and `LAB07_LLM_MODEL` are needed only for a new API evaluation. Set `LAB07_EXTERNAL_CORPUS_OK=1` only when the permission to send the relevant source content to an external provider is confirmed. Course/submission permission is not blanket public redistribution permission. Prices in `.env` are estimates/caps; actual billing is read from provider usage when available. Never print or share the key.
 
-Chỉ bật `LAB07_EXTERNAL_CORPUS_OK=1` sau khi có xác nhận quyền gửi nội dung tài liệu tới API ngoài. Theo xác nhận của người nộp, giáo viên cho phép sử dụng tài liệu cho Lab 07/nộp cho giảng viên; đây là phạm vi sử dụng học thuật, không phải quyền công khai toàn bộ PDF hoặc chunks. Việc gửi context trong run đã hoàn thành dựa trên xác nhận riêng của người dùng. Repo hiện public và có một số evidence excerpts đã track; cần xác nhận riêng phạm vi public của các excerpt đó.
+## Ingestion and indexing (writes the Lab 07 database)
 
-## 2. Ingestion và indexing
-
-Raw PDFs phải được cấp local theo danh sách nguồn. Ingestion V1 chỉ chuẩn bị chunk JSON; ingestion V2 đọc V1 + PDF và tạo file riêng, không embedding:
+These commands are only needed to recreate the local V2 data/index; the submitted database already had 332 vectors. They do not modify Lab 06 A/B strategies, but do write the separate Lab 07 strategy:
 
 ```powershell
 .\.venv\Scripts\python.exe starter\index_discrete_math.py --prepare-only
 .\.venv\Scripts\python.exe starter\improve_discrete_math.py
-```
-
-V1/V2 local JSON nằm dưới `starter/data/` và bị ignore. V2 hiện có 332 chunks, giữ `id`, `source_id`, `source`, `page` và metadata `subject`, `chapter`, `content_type`, `extraction_quality`. Nội dung có nguy cơ mất cấu trúc toán/hình được đánh dấu `needs_review`; không tái tạo nội dung từ hình.
-
-Index V2 dùng Python environment của Lab 06 và `.env`/PostgreSQL của Lab 06:
-
-```powershell
 $Day6Python = "..\..\lab06\K5--Day06-NguyenDucNhat-2A202603812-DataIngestionEngineering\starter\.venv\Scripts\python.exe"
 & $Day6Python starter\index_discrete_math_v2.py
 ```
 
-Indexing ghi strategy riêng `D07_discrete_math_v2` bằng MiniLM đa ngôn ngữ 384 chiều. Chỉ chạy nếu cần tạo lại database; trạng thái nộp hiện tại đã có 332 vectors V2 và không cần re-embed. Index V2 không ghi đè A_fixed hoặc B_paragraph. Xem [ingestion audit](../report/individual/ingestion_v2_review.md) và [index smoke report](../report/individual/v2_index_smoke.md).
+Indexing requires local source PDFs and the approved V2 JSON. Do not run it just to launch the UI/agent; it re-embeds and writes PostgreSQL. The 256/332 `needs_review` flags identify potentially incomplete mathematical/table/diagram extraction; no missing visual data is synthesized.
 
-## 3. Retrieval và benchmark
+## Retrieval and dev experiments
 
-`retrieval_v2.py` triển khai:
-
-1. Dense pgvector, cosine similarity.
-2. TF-IDF lexical trên cùng 332 chunks.
-3. Hybrid RRF, hợp nhất candidate Dense + TF-IDF.
-
-Các lệnh trực tiếp dưới đây dùng live suite, xác minh index PostgreSQL hiện có và chỉ truy vấn (không ghi DB):
+Read-only live retrieval (requires the existing Lab 07 database and Lab 06 Python environment):
 
 ```powershell
-$Day6Python = "..\..\lab06\K5--Day06-NguyenDucNhat-2A202603812-DataIngestionEngineering\starter\.venv\Scripts\python.exe"
-& $Day6Python starter\retrieval_v2.py --strategy dense --query "Định nghĩa cây khung nhỏ nhất là gì?"
-& $Day6Python starter\retrieval_v2.py --strategy tfidf --query "Định nghĩa cây khung nhỏ nhất là gì?"
-& $Day6Python starter\retrieval_v2.py --strategy hybrid_rrf --query "Định nghĩa cây khung nhỏ nhất là gì?"
+& $Day6Python starter/retrieval_v2.py --strategy dense --query "What is a minimum spanning tree?" --top-k 3
+& $Day6Python starter/retrieval_v2.py --strategy tfidf --query "What is a minimum spanning tree?" --top-k 3
+& $Day6Python starter/retrieval_v2.py --strategy hybrid_rrf --query "What is a minimum spanning tree?" --top-k 3
 ```
 
-So sánh Dense/TF-IDF/Hybrid trên dev tạo run mới và đọc PostgreSQL/model đã index; không re-embedding:
+Dev-only retrieval comparison and A2/context experiments create new local runs; they do not call the LLM. A2 uses saved R0 candidates and V2 data offline; C0/C1 uses saved TF-IDF traces:
 
 ```powershell
 & $Day6Python starter\evaluate_retrieval_v2.py
-```
-
-A2 R1 (query expansion) và R2 (candidate expansion + RRF) là phép đo offline trên V2, đọc trace R0 đã khóa, không gọi API/DB:
-
-```powershell
-.\.venv\Scripts\python.exe starter\retrieval_a2.py
-```
-
-Benchmark dev/test được khóa bằng [manifest](../data/benchmark_v2_manifest.json). Dev retrieval và A2 không dùng gold trong query/filter. Không chạy benchmark test bằng retrieval tuning scripts.
-
-## 4. Context Engineering
-
-`context_engineering_v2.py` dùng Top-3 TF-IDF đã lưu để so sánh C0/C1 dev; không chạy retrieval/API/DB. C0 giữ thứ hạng gốc và pack chunk đầy đủ trong 800 ký tự. C1 chọn tập con evidence-aware từ cùng Top-3, không dùng gold.
-
-```powershell
+.\.venv\Scripts\python.exe starter/retrieval_a2.py
 .\.venv\Scripts\python.exe starter\context_engineering_v2.py
 ```
 
-Metrics và audit nằm local ở `starter/results/`; đọc [báo cáo context](../report/individual/context_engineering_dev.md). Token MiniLM trong báo cáo context là proxy, không phải token LLM.
+The benchmark files are read-only. Keep dev/test separation and do not use gold evidence for query, filters, or context selection. Aggregate retrieval metrics are gold-location measures (Hit@1/Evidence Hit@3); Context Evidence Rate is checked after packing. They do not assert that a generated answer is grounded.
 
-## 5. Agent A1 và evaluation
+## Agent evaluation and cost boundaries
 
-Agent A1 dùng OpenRouter Chat Completions function calling. Model quyết định gọi `search_discrete_math`; tool gọi TF-IDF Top-3 R0 rồi đóng context C0 800 ký tự. Mọi câu claim cần citation inline; citation được kiểm tra theo chunk/source/page trong context. Khi JSON/citation lỗi có tối đa một repair với cùng context. Validator cấu trúc không thay thế audit semantic.
-
-Chạy A1 trên 17 câu dev tạo run mới; chỉ chạy khi có quyền, budget và cần một đánh giá mới:
+A1 dev evaluation invokes OpenRouter and can incur cost. Only run a new dev experiment when explicitly intended, permission is confirmed, `.env` is configured, and the limits are reviewed:
 
 ```powershell
-$Day6Python = "..\..\lab06\K5--Day06-NguyenDucNhat-2A202603812-DataIngestionEngineering\starter\.venv\Scripts\python.exe"
-& $Day6Python starter\run_agent_a1_dev.py --max-api-calls 51 --max-total-tokens 30000 --max-cost-usd 0.10 --max-completion-tokens 300
+& $Day6Python starter/run_agent_a1_dev.py --max-api-calls 51 --max-total-tokens 30000 --max-cost-usd 0.10 --max-completion-tokens 300
 ```
 
-Final Evaluation test đã chạy đúng một lần, đủ 7 câu. **Không chạy lại** lệnh dưới đây; chỉ giữ làm command provenance:
+The final test ran once on 2026-11-16. **Do not invoke `run_agent_a1_test.py` again.** Its source, prompts, corpus/benchmark hashes and outputs are frozen in the local run manifest. For submission review, use `report/individual/agent_final_evaluation_test.md`, `artifacts/final_evaluation_public.json`, `artifacts/final_test_manifest_public.json`, and `artifacts/final_test_trace_sanitized.json`. Full query/context/answer traces are restricted local artifacts under ignored `starter/results/`; provide them to the instructor only through a permission-appropriate restricted channel if required.
 
-```powershell
-.\.venv\Scripts\python.exe starter\run_agent_a1_test.py --max-api-calls 21 --max-total-tokens 20000 --max-cost-usd 0.10
-```
+## Tests, UI/demo, and reproducibility
 
-Kết quả chính thức và failure audit: [final evaluation](../report/individual/agent_final_evaluation_test.md). Gói số liệu đã loại bỏ context/text nguồn: [artifacts summary](../artifacts/final_evaluation_public.json). Chạy lại test sẽ tạo lần đánh giá test thứ hai và không còn độc lập.
-
-## 6. Tests và nguyên tắc nộp
+Unit tests are local and do not call OpenRouter or run benchmark queries:
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 .\.venv\Scripts\python.exe -m compileall -q starter tests
-git diff --check
 ```
 
-Test suite có một integration test pgvector chỉ chạy khi bật `RUN_LIVE_V2_TESTS=1`; không bật biến này trong unit-test pass thường.
+One opt-in PostgreSQL integration test requires explicit `RUN_LIVE_V2_TESTS=1`; it is not part of the ordinary unit-test command. A complete rebuild from Git also requires licensed/authorized PDFs, locally generated V2 chunks, the Lab 06 model environment/cache, and PostgreSQL credentials. Reproduction of API answers additionally requires a valid OpenRouter account/key, permission for external source excerpts, model/provider availability and budget; provider routing can vary. The historical final run is reproducible by inspecting its manifest/hashes, not by rerunning the test.
 
-`.gitignore` loại `.env`, `data/discrete_math/raw/`, `starter/data/` và `starter/results/`. Không force-add PDF, chunks V2, raw traces hoặc context. Benchmark JSON hiện đang được track và chứa evidence excerpts. Quyền sử dụng cho bài học/nộp giảng viên đã được người nộp xác nhận; việc public các excerpt và toàn bộ tài liệu chưa được xác nhận riêng. Xem [checklist nộp](../SUBMISSION_CHECKLIST.md) để biết allowlist và giới hạn quyền.
+Demo from saved evidence only: show a grounded answer (`t01`), a correct missing-evidence abstention (`t07`), and a false refusal/failure (`t04`) using the restricted raw trace/report. Explain the difference between source evidence in context and citation validator acceptance. Do not make a new API call for the demo.
+
+Data permissions: the submitter reports instructor permission for Lab 07 and submission to the instructor. That scope does not itself authorize publishing PDFs, all chunks, or excerpts on the public repository. Original PDFs, V1/V2 chunk data and full traces are ignored; some tracked benchmark/audit files contain excerpts and still need public-scope confirmation. Do not force-add raw content or secrets. PDF text extraction can lose formulas, truth-table structure, matrices and graph details; retain `needs_review` and disclose uncertainty.

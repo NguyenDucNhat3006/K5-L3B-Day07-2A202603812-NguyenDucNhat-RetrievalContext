@@ -105,6 +105,48 @@ Preflight tests: `python -m unittest discover -s tests -v` (54 passed, 1 Postgre
 python starter/run_agent_a1_test.py --max-api-calls 21 --max-total-tokens 20000 --max-cost-usd 0.10
 ```
 
-## Trace sanitized cho submission
+## Final test context and answer grade audit
 
-`artifacts/final_test_trace_sanitized.json` gi? 7 case c?ng retrieval hits, metadata, tool events, citation checks, latency, token usage v? chi ph?. Query, answer, chunk text, context v? evidence note ?? ???c b?. Raw trace/metrics g?c v?n n?m nguy?n t?i th? m?c run b? ignore; hash c?a traces, metrics, audit v? manifest g?c ti?p t?c kh?p manifest.
+Per BENCHMARK, context grade 0 means no evidence, 1 means partial evidence or missing conditions/source, and 2 means sufficient evidence with a traceable citation. Each of the five answerable test contexts receives context grade 2 after matching selected-context IDs to the raw trace and checking cited physical PDF pages. Lengths below count Unicode characters in `selected_context`, not tokens. Only IDs in the final context appear; other Top-3 hits were not packed.
+
+| Case | Context chars / budget | Locators in C0 | Context grade | Audit reason |
+|---|---:|---|---:|---|
+| t01 | 604/800 | Ch.1 p.27, p.26 | 2 | p.27 states the Modus Tollens conclusion directly; source and page match. |
+| t02 | 747/800 | Ch.2 p.36, p.33 | 2 | p.36 contains the pigeonhole condition and lower bound 3; the physical page was checked. Chunk p.36 remains `needs_review`, but its relevant readable text is sufficient for this claim. No missing visual content was reconstructed. |
+| t03 | 694/800 | Ch.3 p.45, p.44 | 2 | The unique maximal/minimal elements are stated in page text; locator matches. |
+| t04 | 678/800 | Ch.5 part 1 p.39, p.37 | 2 | The needed connectivity theorem is on p.39 and p.37 gives the definition; both locators were checked. |
+| t05 | 787/800 | Ch.5 part 2 p.30; Ch.6 p.4, p.24 | 2 | The cited theorem and stated limitation were checked against p.30 and context metadata. |
+
+Context grade distribution for t01-t05: **0:0, 1:0, 2:5**. Answer grade distribution for the five answerable cases: **0:2 (t02,t04), 1:0, 2:3 (t01,t03,t05)**; mean 1.2/2 and GAR 3/5. Sufficient context does not guarantee a valid released answer: t02/t04 have context grade 2 but answer grade 0 because validation rejected the output.
+
+## A0 test baseline coverage gap
+
+The inspected local results contain A0/baseline dev runs but no A0 test trace. The only test trace is `agent-a1-final-test-20261116T082303799998Z`, with seven cases t01-t07. Therefore the same-test A0 baseline versus selected A1 comparison requested by BENCHMARK sections 2-3 is incomplete. Do not infer A0 test GAR from 9/15 dev or A1 test GAR. Running frozen pre-test A0 code against the already-opened test could only be labeled a post-hoc descriptive comparison, not an independent result. A fresh untouched test set is required for an independent baseline comparison. This review did not run A0.
+
+## Per-case telemetry
+
+| Case | Retrieval calls | LLM calls | Repair | Latency (ms) | Tokens | Cost (USD) | Status/error |
+|---|---:|---:|---:|---:|---:|---:|---|
+| t01 | 1 | 2 | 0 | 3,484.2 | 1,063 | 0.0000604899 | Answer; structure valid |
+| t02 | 1 | 3 | 1 | 5,992.3 | 2,048 | 0.0001378028 | `uncited_sentence`; repair `inline_citation_mismatch`; false refusal |
+| t03 | 1 | 2 | 0 | 4,035.5 | 1,167 | 0.0000653781 | Answer; structure valid |
+| t04 | 1 | 3 | 1 | 8,661.1 | 2,370 | 0.0001788145 | `uncited_sentence` persists; repair failure; false refusal |
+| t05 | 1 | 2 | 0 | 3,267.7 | 1,131 | 0.0000677813 | Answer; structure valid |
+| t06 | 1 | 2 | 0 | 4,501.8 | 1,253 | 0.0000907160 | Correct model abstention; no API error |
+| t07 | 1 | 2 | 0 | 4,721.2 | 1,331 | 0.0000909109 | Correct model abstention; no API error |
+
+There was one retrieval tool call for each test question (7/7) and 16 LLM/API calls overall, including two repairs. There were no provider/transport errors. t02/t04 are citation/output validation failures, not retrieval misses. The three final released answers have 3/3 structurally valid citation references and 3/3 manually supported references. Draft references in t02/t04 do not turn their final abstentions into grounded answers.
+
+## Sanitized evidence and restricted submission
+
+`artifacts/final_test_trace_sanitized.json` contains seven cases and 21 retrieval hits, with metadata, controller/tool events, citation validation, provider, latency, tokens, and cost. It excludes query text, answer text, chunk text, raw context, evidence notes, free-form tool arguments, and credentials. Run ID, hit locators and aggregates match the frozen raw run; public manifest hashes match the raw artifacts. This sanitized artifact supports structural/run review but cannot independently verify semantic grounding.
+
+The course submission instructions request per-query query, context, answer, citations, errors, timing and cost. These remain in the full local run under ignored `starter/results/`. If the instructor needs them, use a restricted course/LMS channel covered by the permission. Do not publish raw traces unless permission explicitly covers all their contents.
+
+## Demo sequence (saved evidence; no API call)
+
+1. Show t01 as a grounded answer with matching source/page citation.
+2. Show t07 as a correct abstention because the available evidence does not supply the requested vertex order.
+3. Show t04 as a real failure: C0 contains adequate evidence, but an uncited follow-up remains after repair and the agent abstains.
+
+Use the restricted raw trace for query, answer and context details if required. Do not make a new API call or rerun evaluation for the demo.
