@@ -67,7 +67,15 @@ A1 dev evaluation invokes OpenRouter and can incur cost. Only run a new dev expe
 & $Day6Python starter/run_agent_a1_dev.py --max-api-calls 51 --max-total-tokens 30000 --max-cost-usd 0.10 --max-completion-tokens 300
 ```
 
-The final test ran once on 2026-11-16. **Do not invoke `run_agent_a1_test.py` again.** Its source, prompts, corpus/benchmark hashes and outputs are frozen in the local run manifest. For submission review, use `report/individual/agent_final_evaluation_test.md`, `artifacts/final_evaluation_public.json`, `artifacts/final_test_manifest_public.json`, and `artifacts/final_test_trace_sanitized.json`. Full query/context/answer traces are restricted local artifacts under ignored `starter/results/`; provide them to the instructor only through a permission-appropriate restricted channel if required.
+The final test ran once on 2026-11-16. **Do not invoke `run_agent_a1_test.py` again.** Its source, prompts, corpus/benchmark hashes and outputs are frozen in the local run manifest. For submission review, use `report/individual/evaluation.md#a1-official-final-test-evaluation`, `artifacts/final_evaluation_public.json`, `artifacts/final_test_manifest_public.json`, and `artifacts/final_test_trace_sanitized.json`. Full query/context/answer traces are restricted local artifacts under ignored `starter/results/`; provide them to the instructor only through a permission-appropriate restricted channel if required.
+
+## 4. Tổng hợp đánh giá agent
+
+After running an agent and manually reviewing its outputs, prepare three JSON files: case metadata, traces, and human review labels. The aggregator computes metrics from those supplied labels; it does not judge semantic grounding.
+
+    python starter/agent_metrics.py --cases <cases.json> --traces <traces.json> --reviews <reviews.json> --split dev --output starter/results/agent-dev/summary.json
+
+Use a new output directory for a new experiment. Do not regenerate or overwrite the locked A1 official test results.
 
 ## Tests, UI/demo, and reproducibility
 
