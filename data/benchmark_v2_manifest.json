@@ -1,0 +1,21 @@
+{
+  "corpus": "starter/data/indexed/discrete_math/chunks_v2.json",
+  "corpus_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+  "dev": {
+    "file": "data/benchmark_v2_dev.json",
+    "sha256": "84db26d01f9f4d5c3589f3f433d9a0c62a1db22feda079553755a32fbd3416ac",
+    "answerable": 15,
+    "missing_evidence": 2
+  },
+  "test": {
+    "file": "data/benchmark_v2_test.json",
+    "sha256": "3f267ab60758d16351c4e26167e3adb730df8afab5dd983e9db5eb1fa50fc384",
+    "answerable": 5,
+    "missing_evidence": 2,
+    "retrieval_status": "not run"
+  },
+  "query_policy": "Raw Vietnamese question only; no gold evidence or gold-derived metadata filters.",
+  "evidence_policy": "Each answerable gold citation is matched to an approved V2 chunk, source ID, physical PDF page and whitespace-normalized evidence text.",
+  "missing_evidence_policy": "Absent cases were checked against the complete 332-chunk corpus and relevant PDF pages where stated; they are excluded from retrieval hit denominators.",
+  "source_redistribution_permission": "requires verification"
+}

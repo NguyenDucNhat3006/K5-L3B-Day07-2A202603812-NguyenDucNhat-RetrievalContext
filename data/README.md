@@ -7,3 +7,5 @@ Các file `example_*.json` chỉ minh họa định dạng, không đủ để n
 - **Câu thiếu evidence:** `id`, `split`, `question`, `answerable: false`, `expected_behavior: "search_and_abstain"`, `absence_reason`. Xem `agent_cases_example.json`.
 
 Không đưa `gold` hoặc nhãn đáp án vào model và retrieval tool. Ghi nguồn dữ liệu và quyền sử dụng. Cách chuyển một số định dạng Day 6: [starter/README.md](../starter/README.md).
+
+Corpus Cấu trúc rời rạc V2 có benchmark riêng: [dev](benchmark_v2_dev.json) 15 câu có đáp án + 2 câu thiếu bằng chứng; [test](benchmark_v2_test.json) 5 + 2 câu. [Manifest](benchmark_v2_manifest.json) ghi SHA-256 để khóa phiên bản. Lệnh so sánh hiện chỉ chạy dev, không đọc test; gold chỉ dùng sau retrieval để chấm vị trí evidence.

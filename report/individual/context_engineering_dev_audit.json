@@ -1,0 +1,96 @@
+{
+  "context_trace_sha256": "00cb44f8559c5fd7111b7eda0facb1c47bb96b561df9c5237d5924a1e9c39fe8",
+  "rubric": {
+    "0": "Không có evidence cho đáp án cần tìm.",
+    "1": "Có evidence liên quan nhưng thiếu điều kiện hoặc nguồn cần thiết.",
+    "2": "Đủ evidence và citation document/page để trả lời."
+  },
+  "method": "Đọc đầy đủ context C0/C1 của 15 câu dev có đáp án và 2 câu thiếu evidence. Đối chiếu chunk ID/source/page với V2; câu d04 đối chiếu trực quan PDF Chương 2 trang 29. Không suy đoán dữ liệu từ hình hoặc công thức lỗi.",
+  "cases": [
+    {
+      "query_id": "d01", "answerable": true,
+      "C0": {"grade": 0, "support_ids": [], "excerpt": "", "needs_review_status": "material_missing_for_question", "reason": "p6 phân loại mệnh đề sơ cấp/phức hợp nhưng không nêu định nghĩa giá trị chân lý; p24 Chương 6 không liên quan."},
+      "C1": {"grade": 0, "support_ids": [], "excerpt": "", "needs_review_status": "material_missing_for_question", "reason": "p13 định nghĩa biểu thức logic, có ký hiệu toán cần review, nhưng không định nghĩa mệnh đề; p24 Chương 6 không liên quan."}
+    },
+    {
+      "query_id": "d02", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-1-co-so-logic:p11:c1:v2"], "excerpt": "P là điều kiện đủ của Q", "needs_review_status": "flagged_extra_not_used", "reason": "p11 ghi rõ P là điều kiện đủ của Q và citation trang 11; p12 có ký hiệu tương đương cần review nhưng không cần để trả lời."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d03", "answerable": true,
+      "C0": {"grade": 0, "support_ids": [], "excerpt": "", "needs_review_status": "material_missing_for_question", "reason": "Hai đoạn p23/p21 có ký hiệu công thức lỗi và không chứa hàng p=0,q=1,r=0 của bảng chân trị; không suy ra E từ chúng."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d04", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-2-phep-dem:p29:c1:v2"], "excerpt": "5+6 =11 cách chọn áo để mặc.", "needs_review_status": "readable_sufficient", "reason": "p29 tuy gắn needs_review do bố cục bảng nhưng phép cộng và đáp án đọc được; đã đối chiếu PDF trang 29. Công thức lỗi ở p57 không dùng."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d05", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-3-quan-he:p23:c1:v2"], "excerpt": "phản xạ, phản xứng và bắc cầu", "needs_review_status": "none", "reason": "Định nghĩa ở p23 nêu đủ ba tính chất, nguồn và trang rõ."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d06", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-3-quan-he:p44:c1:v2"], "excerpt": "12, 20, 25 là", "needs_review_status": "none", "reason": "p44 nêu trực tiếp ba phần tử tối đại; p45 nói poset khác nên không dùng."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d07", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-4-dai-so-boole:p18:c1:v2"], "excerpt": "1 (tán thành) hoặc 0 (bác bỏ)", "needs_review_status": "flagged_extra_not_used", "reason": "p18 ghi đủ mã hóa phiếu 1/0. p40 Chương 5 có cờ ký hiệu lỗi và không liên quan."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d08", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-1:p14:c1:v2"], "excerpt": "tồn tại ít nhất hai đỉnh cùng bậc", "needs_review_status": "none", "reason": "Định lý 1.2 ở p14 ghi rõ điều kiện hơn một đỉnh và kết luận."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d09", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-1:p24:c1:v2"], "excerpt": "mỗi cạnh của G nối một đỉnh thuộc tập này", "needs_review_status": "flagged_extra_not_used", "reason": "p24 đủ định nghĩa hai tập đỉnh rời nhau và cạnh nối chéo; p3 có cờ hình cần kiểm tra, không dùng."},
+      "C1": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-1:p24:c1:v2"], "excerpt": "mỗi cạnh của G nối một đỉnh thuộc tập này", "needs_review_status": "none", "reason": "p24 vẫn đủ định nghĩa; C1 thay p3 có cờ hình bằng định lý p43, nhưng p43 không cần cho câu trả lời."}
+    },
+    {
+      "query_id": "d10", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-1:p37:c1:v2"], "excerpt": "tồn tại một đường đi nối", "needs_review_status": "none", "reason": "p37 định nghĩa rõ liên thông giữa hai đỉnh của đồ thị vô hướng."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d11", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-1:p42:c1:v2"], "excerpt": "đường đi từ v đến u và từ u đến v", "needs_review_status": "none", "reason": "p42 ghi rõ đường đi theo cả hai chiều cho mọi cặp đỉnh."},
+      "C1": {"grade": 1, "support_ids": ["chuong-5-do-thi-phan-1:p37:c1:v2"], "excerpt": "tồn tại một đường đi nối", "needs_review_status": "none", "reason": "C1 chọn p37 về liên thông vô hướng và p43 về định lý khác; có khái niệm đường đi nhưng thiếu điều kiện hai chiều của liên thông mạnh."}
+    },
+    {
+      "query_id": "d12", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-2:p8:c1:v2"], "excerpt": "mỗi đỉnh của nó đều có bậc chẵn", "needs_review_status": "none", "reason": "p8 ghi điều kiện cần và đủ cho chu trình Euler; p14 nêu đường đi Euler là trường hợp khác."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d13", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-5-do-thi-phan-2:p14:c1:v2"], "excerpt": "đúng 2 đỉnh bậc lẻ", "needs_review_status": "flagged_extra_not_used", "reason": "p14 nêu đủ đường đi Euler không có chu trình và đúng hai đỉnh bậc lẻ; p6 có ký hiệu lỗi nhưng chỉ bổ trợ định nghĩa."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d14", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-6-cay:p11:c1:v2"], "excerpt": "Duyệt tiền tự (Pre-Oder)", "needs_review_status": "none", "reason": "p11 liệt kê đủ tiền tự, trung tự, hậu tự; p1 chỉ nêu chủ đề chương."},
+      "C1": {"grade": 2, "support_ids": ["chuong-6-cay:p11:c1:v2"], "excerpt": "Duyệt tiền tự (Pre-Oder)", "needs_review_status": "none", "reason": "p11 vẫn đủ ba phép duyệt; C1 đổi chunk bổ sung sang p24 nhưng không ảnh hưởng evidence chính."}
+    },
+    {
+      "query_id": "d15", "answerable": true,
+      "C0": {"grade": 2, "support_ids": ["chuong-6-cay:p25:c1:v2"], "excerpt": "tổng trọng số trên các cạnh của nó là nhỏ nhất", "needs_review_status": "none", "reason": "p25 định nghĩa trực tiếp cây khung nhỏ nhất; p39 nói cây khung lớn nhất để phân biệt."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d16", "answerable": false,
+      "C0": {"grade": null, "supports_abstention": true, "support_ids": [], "excerpt": "", "needs_review_status": "readable_but_insufficient", "reason": "p29 cho số áo và 11 cách chọn nhưng không có giá; cờ needs_review không làm mất phép cộng. p12 Chương 6 thiếu hình cây và không liên quan giá áo. Context phải dẫn đến từ chối so sánh giá."},
+      "C1": {"same_as": "C0"}
+    },
+    {
+      "query_id": "d17", "answerable": false,
+      "C0": {"grade": null, "supports_abstention": true, "support_ids": [], "excerpt": "", "needs_review_status": "readable_but_insufficient", "reason": "p43 mô tả Dijkstra và điều kiện trọng số không âm nhưng không đo mili giây; ký hiệu lỗi không phải số liệu thời gian. p24 Chương 6 không liên quan."},
+      "C1": {"same_as": "C0"}
+    }
+  ]
+}
