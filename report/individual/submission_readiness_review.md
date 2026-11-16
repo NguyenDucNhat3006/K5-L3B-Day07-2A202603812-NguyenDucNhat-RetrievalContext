@@ -1,12 +1,12 @@
 # Lab 07 - Final submission readiness review
 
-**Review boundary:** documentation and artifact verification only. No benchmark, retrieval database, embeddings, OpenRouter call, Git commit, or push was performed. Final evaluated source/configuration and original results are preserved.
+**Original Final Review boundary:** documentation and artifact verification only. That review did not run a benchmark, access the retrieval database, create embeddings, call OpenRouter, commit, or push. The present post-push consistency check is a later snapshot and likewise does not change the evaluated source/configuration or original results.
 
 ## Executive result
 
 The selected A1/R0/C0 evaluation is reproducibly described and its one-pass final test has 7 case traces locally. Saved results remain **Dev GAR 12/15 (80%)**, **Test GAR 3/5 (60%)**, Test correct abstention **2/2**, Test tool use **7/7**, Test cost **$0.0006918935**. The test grade distribution is 0:2, 1:0, 2:3. A0 now has one completed retrospective pass on the same opened seven-case test. Its results are descriptive only and do not constitute an independent baseline. A1 official results remain unchanged.
 
-This review started at `HEAD=origin/main=f13cc75621eabc7b40a563cdea4f1ea767368abe`; current documentation changes are local, uncommitted and unpushed. This review makes no claim that the public GitHub repository is safe for unrestricted redistribution: instructor permission is reported for Lab 07/course submission, while public sharing of source excerpts remains unverified.
+Historical snapshot: the Final Review began at HEAD=origin/main=f13cc75621eabc7b40a563cdea4f1ea767368abe. Its ten files were later pushed in commit 32be445a2d09b78cff796e4266144f800ae15bd2. In the subsequent post-push check, git fetch confirmed HEAD=origin/main at that commit and a clean worktree before documentation edits. That check now has local, unstaged changes to README.md, SUBMISSION_CHECKLIST.md, and this report only. This readiness review documents work toward the maximum 85 basic rubric points; it does not claim an awarded score. The public repository is not thereby cleared for unrestricted redistribution: permission for source-derived public excerpts remains unverified.
 
 ## Official requirement traceability
 
@@ -82,7 +82,7 @@ Instructor permission is reported for use in Lab 07 and submission to the instru
 - `report/individual/ingestion_v2_review.md`
 - `report/individual/agent_final_evaluation_test.md` (page-level evidence descriptions)
 
-No original PDFs, `.env`, or API key should be added. `.gitignore` does not remove already tracked files or historical revisions. The public sanitized trace is designed to avoid raw text, but public scope for any document-derived metadata should still be checked. The latest visibility previously checked was public; verify visibility again before submission. No public redistribution permission or source license is asserted here.
+No original PDFs, `.env`, or API key should be added. `.gitignore` does not remove already tracked files or historical revisions. The public sanitized trace is designed to avoid raw text, but public scope for any document-derived metadata should still be checked. The L3B repository was public at the post-push check. No public redistribution permission or source license is asserted here.
 
 ## Reproducibility boundaries
 
@@ -96,7 +96,7 @@ From tracked files, one can inspect code, tests, sanitized results, hashes and i
 
 Use the restricted trace for query/answer/context detail if required. Do not call the API or rerun benchmark during demo.
 
-## Files changed in this local review
+## Files changed in the original Final Review (historical snapshot)
 
 - `.gitignore` - excludes `.private_submission/`.
 - `README.md` and `SUBMISSION_CHECKLIST.md` - link A0 retrospective evaluation and state its caveat/results.
@@ -105,8 +105,12 @@ Use the restricted trace for query/answer/context detail if required. Do not cal
 - `report/individual/a0_retrospective_test_plan.md` - plan updated with actual execution record.
 - `report/individual/agent_final_evaluation_test.md`, `report/individual/2A202603812_NguyenDucNhat.md`, and this review - append actual A0 results without changing A1 metrics.
 
-Raw traces, run metrics and manual audit remain under the Git-ignored `starter/results/`. `.private_submission/` is Git-ignored both by `.gitignore` and the local exclude. No files are staged, committed or pushed.
+The original review artifacts remain under Git-ignored starter/results/ and .private_submission/. The ten files listed above are now in pushed commit 32be445a2d09b78cff796e4266144f800ae15bd2. In the later post-push consistency check, only README.md, SUBMISSION_CHECKLIST.md, and this report were edited locally; these edits are unstaged and unpushed.
 
-## Checks performed
+## Checks performed in the original Final Review
 
-Final validation after this work: 57 unit tests passed and 1 opt-in PostgreSQL test skipped; compileall, all reviewed local Markdown links, A0/A1 JSON and manifest/output hashes, `.private_submission/` ignore, secret scan, and `git diff --check` passed. No A1 rerun, additional A0 API pass, database access or re-embedding occurred.
+Final validation after that work: 57 unit tests passed and 1 opt-in PostgreSQL test skipped; compileall, all reviewed local Markdown links, A0/A1 JSON and manifest/output hashes, `.private_submission/` ignore, secret scan, and `git diff --check` passed. No A1 rerun, additional A0 API pass, database access or re-embedding occurred.
+
+## Post-push consistency check
+
+After fetching, HEAD and origin/main matched commit 32be445a2d09b78cff796e4266144f800ae15bd2, and the worktree was clean before this check's documentation edits. The current local diff is limited to README.md, SUBMISSION_CHECKLIST.md, and this report. Post-push validation: 57 unit tests passed and 1 optional PostgreSQL test skipped; compileall passed; 104 Markdown link references across 31 tracked Markdown files had no missing local target; git diff --check passed. GitHub confirmed the A0 retrospective report, A1 final evaluation report, and sanitized final trace are reachable. .private_submission/, starter/results/, source PDFs, and .env are not tracked. No API call, benchmark, DB access, or indexing occurred.

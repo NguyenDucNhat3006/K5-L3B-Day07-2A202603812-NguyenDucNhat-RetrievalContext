@@ -2,7 +2,7 @@
 
 ## Current review state
 
-At the start of this review, local `main` and `origin/main` both pointed to `f13cc75621eabc7b40a563cdea4f1ea767368abe` (0 ahead/behind), with a clean worktree. This review has since made the documentation changes listed below; they are local, uncommitted and unpushed. Canonical remote: `NguyenDucNhat3006/K5-L3B-Day07-NguyenDucNhat-2A202603812-Retrieval-Context-Engineering` (public at the last visibility check; do not infer visibility is unchanged without checking). No commit/push or visibility change has been made in this review.
+Historical Final Review snapshot: local main and origin/main both pointed to f13cc75621eabc7b40a563cdea4f1ea767368abe before the ten review files were pushed. The ten files were subsequently pushed as 32be445a2d09b78cff796e4266144f800ae15bd2. At the start of this post-push consistency check, fetch confirmed HEAD and origin/main both at that commit and the worktree was clean. This check then made local documentation-only edits to README.md, SUBMISSION_CHECKLIST.md, and report/individual/submission_readiness_review.md; those three edits are currently uncommitted and unpushed. No benchmark, code, prompt, corpus, or result artifact was changed. The L3B GitHub repository is public; that fact does not establish public redistribution permission for source-derived content.
 
 Final evaluated configuration remains A1 + R0 TF-IDF Top-3 + C0 800 Unicode characters + `z-ai/glm-5.3-flash:floor`; the official A1 test ran once. Dev GAR 12/15, A1 test GAR 3/5, A1 test abstention 2/2, tool use 7/7, cost $0.0006918935. One A0 retrospective pass now exists for comparison on the same opened test: GAR 0/5, abstention 2/2, tool use 7/7, cost $0.0004882121. It is not independent and does not alter A1 results.
 
@@ -24,7 +24,7 @@ Official source: [GUIDE](GUIDE.md), [BENCHMARK](BENCHMARK.md), [RUBRIC](RUBRIC.m
 
 - Identity is recorded as student ID `2A202603812` and name `NguyenDucNhat`, matching repository slug/remote. No diacritics or extra personal details have been inferred; confirm the exact official display name before submission if the instructor requires it.
 - The submitter reports teacher permission to use the materials for Lab 07 and submit to the instructor. This is recorded only at that scope. It does not establish a license or public redistribution permission for complete PDFs, full chunks, or arbitrary excerpts.
-- Repository visibility was public at the last check. Source-derived tracked files requiring review against the actual grant before continuing public distribution: `data/benchmark_v2_dev.json`, `data/benchmark_v2_test.json`, `data/benchmark_v2_manifest.json`, `data/example_questions.json`, `report/individual/context_engineering_dev_audit.json`, `report/individual/ingestion_v2_review.md`, and the per-page evidence explanations in `report/individual/agent_final_evaluation_test.md`. Git history must also be considered; `.gitignore` does not remove tracked content.
+- Repository visibility was verified as public during this post-push check. Source-derived tracked files requiring review against the actual grant before continuing public distribution: `data/benchmark_v2_dev.json`, `data/benchmark_v2_test.json`, `data/benchmark_v2_manifest.json`, `data/example_questions.json`, `report/individual/context_engineering_dev_audit.json`, `report/individual/ingestion_v2_review.md`, and the per-page evidence explanations in `report/individual/agent_final_evaluation_test.md`. Git history must also be considered; `.gitignore` does not remove tracked content.
 - PDFs, `.env`, raw chunks, raw traces, and detailed local audits are ignored/untracked. The sanitized test trace has 7 cases and 21 hits, metadata and evaluation telemetry, but no query, answer, chunk text, raw context, evidence note, or credential. Do not add raw trace to public Git. If the instructor needs query/context/answer-level audit, share the original trace through an access-restricted course channel allowed by the permission; do not upload it here.
 - Corpus scope is exactly 9 PDFs / 389 physical pages and 332 V2 chunks. The expected tenth Chapter 3 PPT/PPTX is missing; no substitute was generated.
 
@@ -57,19 +57,14 @@ git diff --check
 
 Final post-run validation for this freeze: 57 unit tests passed and 1 opt-in PostgreSQL integration test skipped; compileall, JSON/hash validation, link checks, ignore checks, secret scan and git diff --check passed. Exactly one A0 retrospective pass ran (7 cases); A1 test was not rerun. No database access or re-embedding occurred. Re-run validation results are recorded in report/individual/submission_readiness_review.md.
 
-## Exact local files awaiting review
+## Post-push consistency check: local diff
 
-The local commit candidates from this work are:
+The ten Final Review files are present in pushed commit 32be445a2d09b78cff796e4266144f800ae15bd2. The only current local changes are:
 
-- `.gitignore`
-- `README.md`
-- `SUBMISSION_CHECKLIST.md`
-- `starter/run_agent_a0_retro_test.py`
-- `tests/test_a0_retro_runner.py`
-- `report/individual/2A202603812_NguyenDucNhat.md`
-- `report/individual/agent_a0_retrospective_test.md`
-- `report/individual/agent_final_evaluation_test.md`
-- `report/individual/a0_retrospective_test_plan.md`
-- `report/individual/submission_readiness_review.md`
+- README.md
+- SUBMISSION_CHECKLIST.md
+- report/individual/submission_readiness_review.md
 
-The `.private_submission/` instructor bundle and A0 raw run artifacts are excluded by `.gitignore` and must remain outside public Git. Before committing/pushing, review whether tracked benchmark and audit excerpts are covered by the teacher's permission; that permission has not been established as public redistribution permission. No `.env`, API keys, PDFs, raw traces, raw contexts, or generated corpus files are candidates. No file has been staged, committed or pushed.
+These edits are unstaged, uncommitted, and unpushed. The private A0/A1 instructor packages and raw run artifacts remain Git-ignored. No PDF, .env, API key, raw trace, raw context, or generated corpus file is included in this local diff. Publicly tracked source-derived benchmark/audit content still requires confirmation against the exact permission scope before continued public distribution.
+
+Post-push checks completed for this local documentation diff: 57 unit tests passed and 1 opt-in PostgreSQL integration test skipped; compileall passed; 104 Markdown link references across 31 tracked Markdown files had no missing local targets; git diff --check passed. GitHub pages for the A0 retrospective report, A1 final evaluation, and sanitized final trace were reachable. No API, benchmark, database, or indexing operation was performed.
