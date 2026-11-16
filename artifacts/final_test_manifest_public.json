@@ -39,7 +39,7 @@
     "a1_system_prompt_sha256": "5959f7354c1fc8eaf62fe0ddfef87bebf79a76ae0e340b5bfc54dffc157b479c",
     "a1_repair_prompt_sha256": "50ad60b9b3e989bf06531c88ef32a0ae0d810a843139067632a71bbf19d3637c"
   },
-  "permission_status": "User attested prior permission for external evaluation; repository source redistribution license remains unverified.",
+  "permission_status": "Run-time: user attested permission for external evaluation. Submitter now reports teacher permission for Lab 07/course submission. These do not establish public redistribution permission for complete PDFs or all excerpts; public scope remains unverified.",
   "raw_questions_answers_contexts_or_secrets_included": false,
   "database_accessed": false,
   "database_written": false,

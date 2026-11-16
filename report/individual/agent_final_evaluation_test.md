@@ -18,7 +18,7 @@ Hai câu thiếu bằng chứng (t06, t07) abstain đúng. Tất cả 7 câu đ�
 - Hash corpus V2: `979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990`.
 - Manifest lưu SHA-256 của benchmark, corpus, manifest benchmark, A1, agent adapter, context packer, retrieval, baseline, runner và hai system prompt.
 
-User đã xác nhận trước đó quyền gửi context corpus này tới OpenRouter; `.env` bật `LAB07_EXTERNAL_CORPUS_OK=1`. Manifest benchmark vẫn ghi `source_redistribution_permission: requires verification`, do repo chưa lưu văn bản license riêng. Run manifest phân biệt rõ sự xác nhận của người dùng với tình trạng giấy phép lưu trong repo.
+Người dùng đã xác nhận riêng quyền gửi context corpus tới OpenRouter cho lượt đánh giá; `.env` bật `LAB07_EXTERNAL_CORPUS_OK=1`. Người nộp cũng xác nhận giáo viên cho phép dùng tài liệu trong phạm vi Lab 07/nộp giảng viên. Hai xác nhận này không tự cấp quyền public PDF hoặc toàn bộ trích đoạn. Manifest benchmark vẫn ghi `source_redistribution_permission: requires verification` cho tái phân phối công khai.
 
 ## Metrics tự động
 
@@ -80,13 +80,13 @@ Grounded Answer Rate dùng 5 answerable làm mẫu số; grade 2 được tính 
 - **Experiments/improvements:** A/B/C ingestion/retrieval, C0/C1, A0/A1 và R0/R1/R2 được giữ thành runs riêng; cấu hình được chọn trên dev. Test không dẫn đến thay đổi prompt hoặc retriever. Audit này phát hiện hai lỗi cần sửa trong một run dev mới: bộ parse citation nhầm `[20/7]` là citation; prompt/verifier không giúp model gắn inline citation cho từng câu khẳng định (t04).
 - **Trade-offs, cost, latency:** Test tốn $0.0006918935, thấp hơn cap $0.10; trung bình 4.95 giây/câu. Tăng thêm model call/repair chưa khắc phục lỗi trích dẫn lặp câu.
 - **Reproducibility/reporting:** `manifest.json` khóa hash/config; traces đầy đủ gồm controller, calls, hits, context, output, citation, usage, provider, latency và cost. Trace/results không ghi vào Git theo `.gitignore`; chỉ report/code được theo dõi.
-- **Giới hạn ingestion:** PDF extraction làm hỏng hoặc mất layout công thức, bảng, ma trận và hình; các chunk `needs_review` không được dùng để suy đoán dữ liệu thị giác. Các PDF nguồn chưa có license/redistribution notice được lưu trong repo; cần kiểm tra và lưu bằng chứng quyền sử dụng trước khi chia sẻ corpus ra ngoài hoặc public.
+- **Giới hạn ingestion:** PDF extraction làm hỏng hoặc mất layout công thức, bảng, ma trận và hình; các chunk `needs_review` không được dùng để suy đoán dữ liệu thị giác. Giáo viên đã cho phép dùng tài liệu cho bài học/nộp bài theo xác nhận của người nộp; chưa có căn cứ trong repo cho quyền public PDF, corpus hoặc mọi excerpt.
 - **Nâng cao:** Không đánh giá challenge riêng 100 trang/90%; không tuyên bố đạt bonus.
 
 ### Công việc còn lại
 
 1. Sửa lỗi A1 validation/prompt ở một run mới trên dev trước khi cân nhắc benchmark test khác; không thay kết quả run khóa hiện tại. Ưu tiên phân biệt bracket công thức với `[chunk_id]`, rồi kiểm tra repair có bao phủ citation cho từng câu.
-2. Xác minh/lưu giấy phép phân phối của PDF nguồn. Quyền gửi đoạn văn cho OpenRouter trong lượt này dựa trên xác nhận trước của người dùng và cờ `.env`, không phải license được lưu trong repo.
+2. Lưu lại phạm vi giáo viên cho phép dùng tài liệu cho Lab 07/nộp bài. Nếu muốn duy trì public repository, xác nhận riêng rằng benchmark/audit excerpts cụ thể được phép public; quyền gửi context tới OpenRouter trong lượt này là xác nhận riêng, không phải quyền public PDF.
 3. Nếu cần semantic citation support tự động, bổ sung evaluator riêng; cấu trúc citation hợp lệ hiện không tự chứng minh entailment.
 
 ## Artifacts và lệnh tái lập
@@ -104,3 +104,7 @@ Preflight tests: `python -m unittest discover -s tests -v` (54 passed, 1 Postgre
 ```powershell
 python starter/run_agent_a1_test.py --max-api-calls 21 --max-total-tokens 20000 --max-cost-usd 0.10
 ```
+
+## Trace sanitized cho submission
+
+`artifacts/final_test_trace_sanitized.json` gi? 7 case c?ng retrieval hits, metadata, tool events, citation checks, latency, token usage v? chi ph?. Query, answer, chunk text, context v? evidence note ?? ???c b?. Raw trace/metrics g?c v?n n?m nguy?n t?i th? m?c run b? ignore; hash c?a traces, metrics, audit v? manifest g?c ti?p t?c kh?p manifest.

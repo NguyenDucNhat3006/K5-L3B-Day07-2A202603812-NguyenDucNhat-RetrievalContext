@@ -2,7 +2,7 @@
 
 **MSSV:** 2A202603812  
 **Sinh viên:** NguyenDucNhat  
-**Repository:** `K5-L3-Day07-NguyenDucNhat-2A202603812-Retrieval-Context-Engineering`
+**Repository:** `K5-L3B-Day07-NguyenDucNhat-2A202603812-Retrieval-Context-Engineering` (current `origin` repository)
 
 > Danh tính ghi theo repository name và Git remote; `STUDENT.md` chỉ lưu MSSV và tên đúng cách viết đã xác minh trong slug, không tự thêm dấu tiếng Việt hay chi tiết cá nhân khác.
 
@@ -14,7 +14,7 @@ Trong V2 có 256/332 chunk mang `needs_review`. PDF parser có thể làm mất 
 
 Vector V2 dùng `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (384 chiều) trong PostgreSQL 16 + pgvector, cosine similarity, strategy riêng `D07_discrete_math_v2`. Index V2 không ghi đè A_fixed hoặc B_paragraph của Lab 06. Benchmark giữ nguyên hash: dev 15 câu answerable + 2 câu thiếu evidence; test 5 + 2. Gold chỉ được dùng sau retrieval để đánh giá.
 
-**Quyền phân phối:** quyền sử dụng/phân phối các PDF và trích đoạn vẫn cần xác minh. Manifest benchmark cũng ghi `source_redistribution_permission: requires verification`. Không đưa PDF, chunks hoặc context traces lên GitHub nếu chưa có quyền.
+**Phạm vi quyền dữ liệu:** theo xác nhận của người nộp, giáo viên đã cho phép sử dụng tài liệu trong phạm vi học phần/Lab 07 và nộp bài cho giảng viên. Không suy rộng xác nhận này thành quyền công khai PDF đầy đủ, toàn bộ chunks hoặc evidence excerpts. Manifest benchmark vẫn ghi `source_redistribution_permission: requires verification`, đúng với trạng thái quyền tái phân phối công khai chưa được xác nhận. Repo hiện public và có excerpt đã track; cần đối chiếu từng artifact với phạm vi giáo viên cho phép trước khi coi việc public repository là phù hợp. Quyền gửi context tới OpenRouter trong lần đánh giá là xác nhận riêng đã ghi trong run manifest, không phải căn cứ cấp quyền public.
 
 ## 2. Ba phương pháp retrieval
 

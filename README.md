@@ -21,12 +21,13 @@ Hai false refusal trên test (t02, t04) có evidence trong context; câu trả l
 - [A2 retrieval dev](report/individual/retrieval_a2_dev.md)
 - [Final test audit](report/individual/agent_final_evaluation_test.md)
 - [Metrics tổng hợp đã loại bỏ nội dung nguồn](artifacts/final_evaluation_public.json)
+- [Trace Final Test đã khử nội dung nguồn](artifacts/final_test_trace_sanitized.json)
 
 ## Dataset và quyền sử dụng
 
 Corpus V2 được trích từ 9 PDF (389 trang vật lý có trong thư mục nguồn), tạo 332 chunks. Bộ benchmark gồm 17 câu dev (15 answerable, 2 thiếu evidence) và 7 câu test (5 answerable, 2 thiếu evidence). Model embedding: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, 384 chiều; vector V2 nằm trong PostgreSQL 16 + pgvector, strategy riêng `D07_discrete_math_v2`. Các strategy A/B của Lab 06 được giữ nguyên.
 
-Chỉ có 9 PDF trong thư mục nguồn; file PPT/PPTX thứ 10 dự kiến cho Chương 3 chưa có để đối chiếu. Công thức, ma trận, bảng và hình có giới hạn trích xuất; 256/332 chunk mang `needs_review`. **Quyền phân phối PDF và trích đoạn vẫn cần xác minh.** Không đưa PDF, chunks, raw traces/context hoặc secrets lên GitHub trước khi xác minh quyền. Các file benchmark hiện được Git theo dõi và chứa evidence text trích từ nguồn; xem checklist trước khi public.
+Chỉ có 9 PDF trong thư mục nguồn (389 trang vật lý); file PPT/PPTX thứ 10 dự kiến cho Chương 3 chưa có để đối chiếu. Công thức, ma trận, bảng và hình có giới hạn trích xuất; 256/332 chunk mang `needs_review`. Theo xác nhận của người nộp, giáo viên đã cho phép sử dụng tài liệu trong phạm vi học phần/Lab 07 và nộp bài cho giảng viên. Xác nhận đó không tự mở rộng thành quyền công khai toàn bộ PDF, chunks hoặc trích đoạn. Repo GitHub hiện public và một số benchmark/audit chứa evidence text trích từ nguồn; cần xác nhận riêng rằng phạm vi cho phép bao gồm các file này trước khi coi repo public là phù hợp. Xem checklist quyền dữ liệu. Không đưa PDF, raw traces/context hoặc secrets lên GitHub.
 
 ## Kiểm thử
 

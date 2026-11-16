@@ -1,14 +1,14 @@
 ﻿# Checklist chuẩn bị nộp Lab 07
 
-Trạng thái theo artifacts hiện có; chưa commit hoặc push.
+Checkpoint Git gần nhất sau khi fetch: local `main` và `origin/main` cùng trỏ tới `98c620049214357f40fd6c32d4e2cae06b6ef01c` (0 ahead/behind). Remote canonical hiện là `NguyenDucNhat3006/K5-L3B-Day07-NguyenDucNhat-2A202603812-Retrieval-Context-Engineering`, GitHub visibility là public. Hiện có thay đổi chuẩn bị submission trong worktree chưa commit/push theo yêu cầu. Commit `98c6200` đã tồn tại trên remote; agent không tạo commit hoặc push trong lượt này.
 
 ## Đối chiếu yêu cầu/rubric
 
 | Yêu cầu | Trạng thái | Bằng chứng / việc còn lại |
 |---|---|---|
 | Dữ liệu Day 6, embedding, vector store | Đạt | V2 332 chunks, MiniLM multilingual 384 chiều, PostgreSQL 16 + pgvector, strategy riêng; A/B Lab 06 giữ nguyên. Xem `report/individual/v2_index_smoke.md`. |
-| Dataset và benchmark | Đạt có điều kiện | Dev 17 (15+2), test 7 (5+2), manifest/hash có sẵn; test đã chạy một lần. Git đang track ba benchmark JSON có evidence excerpts; phải xác minh quyền phân phối trước khi public. |
-| Bao phủ nguồn | Thiếu | Thư mục có 9 PDF/389 trang, trong khi kiểm kê kỳ vọng 10 files. Bản PPT/PPTX Chương 3 chưa có để đối chiếu PDF/PPT trùng. |
+| Dataset và benchmark | Đạt có điều kiện | Dev 17 (15+2), test 7 (5+2), manifest/hash có sẵn; test đã chạy một lần. Người nộp xác nhận giáo viên cho phép sử dụng tài liệu cho Lab 07/nộp bài; phạm vi này không tự cho phép public benchmark excerpts. |
+| Bao phủ nguồn | Thiếu | Corpus hiện có 9 PDF/389 trang vật lý, trong khi kiểm kê kỳ vọng 10 files. Bản PPT/PPTX Chương 3 chưa có để đối chiếu PDF/PPT trùng. |
 | Ba phương pháp retrieval, gồm Dense | Đạt | Dense pgvector, TF-IDF, Hybrid RRF dùng cùng V2; có rank/score/source/page/filter và lỗi trong báo cáo dev. |
 | Agent thật, tool traces và context | Đạt | A1 dùng OpenRouter tool calling thật, R0 TF-IDF Top-3, C0 800 ký tự, citation check và tối đa một repair. |
 | Evaluation | Đạt | Retrieval/context và A1 được đánh giá dev; final Agent test 7 câu có metrics tự động, audit thủ công, hashes và traces local. Test được chạy đúng một lần. |
@@ -16,7 +16,7 @@ Trạng thái theo artifacts hiện có; chưa commit hoặc push.
 | Grounding/citation/abstention | Đạt | Citation structure được phân biệt với support semantic; t02/t04 là false refusals sau repair; t06/t07 abstain đúng. |
 | Tái lập và báo cáo | Đạt có điều kiện | README, code, tests, report cá nhân, sanitized metrics và public manifest có. Raw run manifests/traces dưới `starter/results/` bị ignore; chỉ đưa lên nơi được phép. |
 | Thử thách nâng cao 100 trang | Chưa thực hiện | Không tuyên bố bonus 15 điểm. |
-| Nguồn và quyền phân phối | **Chặn public release** | Quyền phân phối PDF/trích đoạn vẫn cần xác minh; không tuyên bố đã có license. Xem phần Git/data bên dưới. |
+| Nguồn và quyền phân phối | **Đạt có điều kiện cho course submission; public scope cần xác minh** | Theo xác nhận người nộp, giáo viên cho phép dùng tài liệu cho Lab 07/nộp giảng viên. Không suy rộng thành license hoặc quyền công khai PDF đầy đủ/corpus/excerpts; repo hiện public nên cần xác nhận thêm quyền đối với từng artifact trích nguồn. |
 
 ## Báo cáo cá nhân và thông tin sinh viên
 
@@ -28,9 +28,10 @@ Trạng thái theo artifacts hiện có; chưa commit hoặc push.
 - Raw PDFs không được Git track; `data/discrete_math/raw/` bị ignore.
 - V1/V2 JSON và run outputs trong `starter/data/`, `starter/results/` bị ignore.
 - Detailed A1 audit JSON và d04 API smoke report được ignore rõ ràng vì có thể chứa source-derived content; dùng báo cáo/sanitized artifacts thay thế khi public.
-- Git hiện **đang track** `data/benchmark_v2_dev.json`, `data/benchmark_v2_test.json`, `data/benchmark_v2_manifest.json`. Hai benchmark có câu hỏi/đáp án/evidence excerpt từ tài liệu; một số report/audit ingestion/context cũng có trích đoạn source. Không push public trước khi xác minh quyền.
+- GitHub repo hiện là **public**. Người nộp xác nhận giáo viên cho phép dùng tài liệu trong phạm vi Lab 07/nộp bài; chưa có xác nhận rằng quyền đó bao gồm public distribution. Git history track `data/benchmark_v2_dev.json`, `data/benchmark_v2_test.json`, `data/benchmark_v2_manifest.json`; hai benchmark chứa evidence excerpts (dev 15 excerpt/581 ký tự, test 5 excerpt/181 ký tự). Cũng đang track `data/example_questions.json` (một evidence field ngắn, nguồn gốc cần rà soát), `report/individual/context_engineering_dev_audit.json` (16 excerpt không rỗng/461 ký tự) và `report/individual/ingestion_v2_review.md` (15 ví dụ trước/sau gắn với PDF/trang). Cần xác nhận các artifact cụ thể này thuộc phạm vi cho phép trước khi public tiếp tục. Không kết luận repo an toàn public; `.gitignore` không gỡ file khỏi history.
+- `report/individual/agent_final_evaluation_test.md` chứa audit theo trang PDF; automated overlap scan có một candidate khớp chuỗi ngắn với chunk nguồn, cần rà soát thủ công. Các report khác không có match chính xác từ 20 ký tự trở lên trong kiểm tra hiện tại; đây không thay thế xác nhận phạm vi quyền.
 - Không đưa raw `traces.json`, `audit_manual.json` đầy đủ, contexts, API responses hoặc PDFs lên GitHub nếu chưa có quyền; traces giữ nguyên ở local ignored directory.
-- `artifacts/final_evaluation_public.json` và `artifacts/final_test_manifest_public.json` là gói đề xuất đưa lên Git: chỉ aggregate metrics, run ID, hash, case labels, cấu hình và chi phí; không có query, answer, PDF excerpt, raw context hay secret. Vẫn cần kiểm tra chính sách lớp/đơn vị trước khi phát hành.
+- `artifacts/final_evaluation_public.json`, `artifacts/final_test_manifest_public.json` và `artifacts/final_test_trace_sanitized.json` không chứa PDF excerpt/raw context/API key theo kiểm tra hiện tại. Trace sanitized giữ 7 case, 21 hit, chunk IDs, rank/score, source/page, metadata có cấu trúc, tool event, citation checks, latency, token và chi phí; query, answer, chunk text, context, evidence note, free-text tool args và `quality_reasons` đã bỏ. Có thể nộp các artifact này cho giảng viên theo phạm vi đã xác nhận; việc public GitHub vẫn phụ thuộc quyền đối với các file nguồn khác.
 - Nếu quyền không cho phép redistribution, giữ repo/private artifact store hoặc tạo một bản nộp sạch lịch sử Git đã loại benchmark/excerpts và cung cấp quy trình nhận dữ liệu được cấp quyền. Chỉ thêm `.gitignore` không loại file đã track hoặc xóa nội dung khỏi Git history.
 
 ## Allowlist đề xuất cho GitHub sau khi duyệt
@@ -42,6 +43,7 @@ Trạng thái theo artifacts hiện có; chưa commit hoặc push.
 - `starter/requirements-*.txt`, `.env.example`, `.gitignore`.
 - `report/individual/2A202603812_NguyenDucNhat.md`, `report/individual/agent_final_evaluation_test.md`, các báo cáo tổng hợp dev sau khi kiểm tra không chứa nội dung nguồn vượt quyền.
 - `artifacts/README.md`, `artifacts/final_evaluation_public.json`, `artifacts/final_test_manifest_public.json`.
+- `artifacts/final_test_trace_sanitized.json` (trace tổng hợp đã khử source text; không phải raw trace).
 
 ### Chỉ đưa lên khi có quyền/phê duyệt rõ
 
@@ -62,5 +64,5 @@ git diff --check
 git status --short
 ```
 
-Lượt kiểm tra hiện tại: **54 tests passed, 1 live PostgreSQL test skipped** do opt-in. Không chạy lại benchmark test. Không dùng `git add -f` cho các thư mục bị ignore; không commit/push trước khi người dùng duyệt artifacts và quyết định quyền phân phối.
+Lượt kiểm tra hiện tại: **54 tests passed, 1 live PostgreSQL test skipped** do opt-in. Không chạy benchmark test hoặc gọi API trong lượt chuẩn bị cuối. Không dùng `git add -f` cho các thư mục bị ignore; không commit/push trước khi người dùng duyệt artifacts và quyết định quyền phân phối.
 

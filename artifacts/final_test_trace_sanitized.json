@@ -1,0 +1,1705 @@
+{
+  "artifact_kind": "sanitized final test traces",
+  "schema_version": 1,
+  "run_id": "agent-a1-final-test-20261116T082303799998Z",
+  "split": "test",
+  "test_executions": 1,
+  "configuration": {
+    "agent": "A1",
+    "retriever": "R0 TF-IDF Top-3",
+    "context": "C0 <=800 Unicode characters",
+    "model": "z-ai/glm-5.3-flash:floor",
+    "provider_routing": "OpenRouter; model :floor route; require_parameters; configured provider.max_price",
+    "corpus": "Discrete Math V2",
+    "chunk_count": 332,
+    "max_repairs_per_question": 1,
+    "max_completion_tokens_per_call": 300
+  },
+  "source_content_included": false,
+  "excluded_fields": [
+    "question text",
+    "retrieved chunk text",
+    "selected context text",
+    "answer text",
+    "evidence notes",
+    "free-text audit rationale",
+    "free-text tool argument values",
+    "API credentials",
+    "free-text quality_reasons metadata"
+  ],
+  "redaction_policy": "Preserve locators, ranks, scores, metadata, tool event names, citation checks, timing, token usage and actual cost; omit source-derived and free-text payloads.",
+  "aggregate_metrics": {
+    "expected_cases": 7,
+    "completed_cases": 7,
+    "failed_cases": 0,
+    "tool_use_correct": {
+      "count": 7,
+      "total": 7
+    },
+    "citation_structure_valid": {
+      "count": 3,
+      "total": 7
+    },
+    "false_refusal_auto": {
+      "count": 2,
+      "total": 5
+    },
+    "missing_evidence_abstention_auto": {
+      "count": 2,
+      "total": 2
+    },
+    "grounded_answer_rate": "manual_audit_required",
+    "semantic_citation_support": "manual_audit_required",
+    "latency_mean_ms": 4951.952614285541,
+    "latency_median_ms": 4501.7619000000195,
+    "token_usage": {
+      "prompt_tokens": 7877,
+      "completion_tokens": 2486,
+      "total_tokens": 10363
+    },
+    "api_calls": 16,
+    "provider_counts": {
+      "Relace": 7,
+      "Wafer": 9
+    },
+    "actual_cost_usd": 0.0006918935,
+    "estimated_cost_usd_from_configured_rates": 0.000788258,
+    "observed_budget_respected": true
+  },
+  "cases": [
+    {
+      "case_id": "t01",
+      "case_index": 1,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_74a59306fa0047e1bbd3b362",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-1-co-so-logic:p27:c1:v2",
+          "score": 0.6557248298042804,
+          "strategy": "tfidf",
+          "source_id": "chuong-1-co-so-logic",
+          "source": "data/discrete_math/raw/Chuong 1. Co so logic.pdf",
+          "page": 27,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-1-co-so-logic:p27:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 1
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-1-co-so-logic:p26:c1:v2",
+          "score": 0.20507456811248104,
+          "strategy": "tfidf",
+          "source_id": "chuong-1-co-so-logic",
+          "source": "data/discrete_math/raw/Chuong 1. Co so logic.pdf",
+          "page": 26,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-1-co-so-logic:p26:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 1
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-1-co-so-logic:p33:c1:v2",
+          "score": 0.1713695806104252,
+          "strategy": "tfidf",
+          "source_id": "chuong-1-co-so-logic",
+          "source": "data/discrete_math/raw/Chuong 1. Co so logic.pdf",
+          "page": 33,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-1-co-so-logic:p33:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 1
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-1-co-so-logic:p27:c1:v2",
+          "chuong-1-co-so-logic:p26:c1:v2"
+        ],
+        "character_count": 604,
+        "context_content_omitted": true
+      },
+      "status": "answered",
+      "abstention": false,
+      "failure_type": "",
+      "repair_count": 0,
+      "citations": [
+        {
+          "chunk_id": "chuong-1-co-so-logic:p27:c1:v2",
+          "source": "data/discrete_math/raw/Chuong 1. Co so logic.pdf",
+          "page": 27
+        }
+      ],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "valid_structure_only",
+            "valid": true,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-1-co-so-logic:p27:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 1. Co so logic.pdf",
+                "page": 27
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-1-co-so-logic:p27:c1:v2",
+            "source": "data/discrete_math/raw/Chuong 1. Co so logic.pdf",
+            "page": 27,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": true,
+          "final_status": "answered",
+          "answer_grade": 2,
+          "grounded_final_answer": true,
+          "false_refusal": false,
+          "abstention_correct": false
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 401,
+            "completion_tokens": 80,
+            "total_tokens": 481,
+            "cost": 2.22719e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 485,
+            "completion_tokens": 97,
+            "total_tokens": 582,
+            "cost": 3.8218e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 3484.161200000017,
+      "token_usage": {
+        "prompt_tokens": 886,
+        "completion_tokens": 177,
+        "total_tokens": 1063
+      },
+      "actual_cost_usd": 6.04899e-05,
+      "estimated_cost_usd": 6.978e-05
+    },
+    {
+      "case_id": "t02",
+      "case_index": 2,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_c493bb1c8c6b489ebdbeca16",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        },
+        {
+          "event": "repair",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+          "score": 0.5654218156463939,
+          "strategy": "tfidf",
+          "source_id": "chuong-2-phep-dem",
+          "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+          "page": 36,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-2-phep-dem:p36:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 2
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-2-phep-dem:p33:c1:v2",
+          "score": 0.4519367107108966,
+          "strategy": "tfidf",
+          "source_id": "chuong-2-phep-dem",
+          "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+          "page": 33,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-2-phep-dem:p33:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "explanation",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 2
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-4-dai-so-boole:p36:c1:v2",
+          "score": 0.19169211417277104,
+          "strategy": "tfidf",
+          "source_id": "chuong-4-dai-so-boole",
+          "source": "data/discrete_math/raw/Chuong 4.  Đai số Boole.pdf",
+          "page": 36,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-4-dai-so-boole:p36:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "explanation",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 4
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-2-phep-dem:p36:c1:v2",
+          "chuong-2-phep-dem:p33:c1:v2"
+        ],
+        "character_count": 747,
+        "context_content_omitted": true
+      },
+      "status": "abstain",
+      "abstention": true,
+      "failure_type": "repair_failure",
+      "repair_count": 1,
+      "citations": [],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "uncited_sentence",
+            "valid": false,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+                "page": 36
+              }
+            ]
+          },
+          {
+            "event": "repair",
+            "validation": "inline_citation_mismatch",
+            "valid": false,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+                "page": 36
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+            "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+            "page": 36,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": true,
+          "final_status": "abstain",
+          "answer_grade": 0,
+          "grounded_final_answer": false,
+          "false_refusal": true,
+          "abstention_correct": false
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 400,
+            "completion_tokens": 57,
+            "total_tokens": 457,
+            "cost": 2.04288e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 517,
+            "completion_tokens": 150,
+            "total_tokens": 667,
+            "cost": 4.9314e-05
+          },
+          "tool_names": []
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 718,
+            "completion_tokens": 206,
+            "total_tokens": 924,
+            "cost": 6.806e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 5992.285499999525,
+      "token_usage": {
+        "prompt_tokens": 1635,
+        "completion_tokens": 413,
+        "total_tokens": 2048
+      },
+      "actual_cost_usd": 0.0001378028,
+      "estimated_cost_usd": 0.000144662
+    },
+    {
+      "case_id": "t03",
+      "case_index": 3,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_e2447c6c9673432b8162373b",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-3-quan-he:p45:c1:v2",
+          "score": 0.6780356595795118,
+          "strategy": "tfidf",
+          "source_id": "chuong-3-quan-he",
+          "source": "data/discrete_math/raw/Chuong 3. Quan he.pdf",
+          "page": 45,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-3-quan-he:p45:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 3
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-3-quan-he:p44:c1:v2",
+          "score": 0.5185988794722294,
+          "strategy": "tfidf",
+          "source_id": "chuong-3-quan-he",
+          "source": "data/discrete_math/raw/Chuong 3. Quan he.pdf",
+          "page": 44,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-3-quan-he:p44:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 3
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-3-quan-he:p41:c1:v2",
+          "score": 0.4110395172588271,
+          "strategy": "tfidf",
+          "source_id": "chuong-3-quan-he",
+          "source": "data/discrete_math/raw/Chuong 3. Quan he.pdf",
+          "page": 41,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-3-quan-he:p41:c1",
+              "chuong-3-quan-he:p41:c2"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "definition",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": true,
+            "chapter": 3
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-3-quan-he:p45:c1:v2",
+          "chuong-3-quan-he:p44:c1:v2"
+        ],
+        "character_count": 694,
+        "context_content_omitted": true
+      },
+      "status": "answered",
+      "abstention": false,
+      "failure_type": "",
+      "repair_count": 0,
+      "citations": [
+        {
+          "chunk_id": "chuong-3-quan-he:p45:c1:v2",
+          "source": "data/discrete_math/raw/Chuong 3. Quan he.pdf",
+          "page": 45
+        }
+      ],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "valid_structure_only",
+            "valid": true,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-3-quan-he:p45:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 3. Quan he.pdf",
+                "page": 45
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-3-quan-he:p45:c1:v2",
+            "source": "data/discrete_math/raw/Chuong 3. Quan he.pdf",
+            "page": 45,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": true,
+          "final_status": "answered",
+          "answer_grade": 2,
+          "grounded_final_answer": true,
+          "false_refusal": false,
+          "abstention_correct": false
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 399,
+            "completion_tokens": 150,
+            "total_tokens": 549,
+            "cost": 2.45121e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 513,
+            "completion_tokens": 105,
+            "total_tokens": 618,
+            "cost": 4.0866e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 4035.5116999999154,
+      "token_usage": {
+        "prompt_tokens": 912,
+        "completion_tokens": 255,
+        "total_tokens": 1167
+      },
+      "actual_cost_usd": 6.53781e-05,
+      "estimated_cost_usd": 8.5224e-05
+    },
+    {
+      "case_id": "t04",
+      "case_index": 4,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_41de4615e4c540c09186fb7f",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        },
+        {
+          "event": "repair",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-5-do-thi-phan-1:p39:c1:v2",
+          "score": 0.4899769932007164,
+          "strategy": "tfidf",
+          "source_id": "chuong-5-do-thi-phan-1",
+          "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+          "page": 39,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-5-do-thi-phan-1:p39:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "theorem",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 5
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-5-do-thi-phan-1:p37:c1:v2",
+          "score": 0.4444428446679162,
+          "strategy": "tfidf",
+          "source_id": "chuong-5-do-thi-phan-1",
+          "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+          "page": 37,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-5-do-thi-phan-1:p37:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "definition",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 5
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-5-do-thi-phan-1:p42:c1:v2",
+          "score": 0.4002984981245737,
+          "strategy": "tfidf",
+          "source_id": "chuong-5-do-thi-phan-1",
+          "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+          "page": 42,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-5-do-thi-phan-1:p42:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "explanation",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 5
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-5-do-thi-phan-1:p39:c1:v2",
+          "chuong-5-do-thi-phan-1:p37:c1:v2"
+        ],
+        "character_count": 678,
+        "context_content_omitted": true
+      },
+      "status": "abstain",
+      "abstention": true,
+      "failure_type": "repair_failure",
+      "repair_count": 1,
+      "citations": [],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "uncited_sentence",
+            "valid": false,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-5-do-thi-phan-1:p39:c1:v2",
+                "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+                "page": 39
+              },
+              {
+                "chunk_id": "chuong-5-do-thi-phan-1:p37:c1:v2",
+                "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+                "page": 37
+              }
+            ]
+          },
+          {
+            "event": "repair",
+            "validation": "uncited_sentence",
+            "valid": false,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-5-do-thi-phan-1:p39:c1:v2",
+                "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+                "page": 39
+              },
+              {
+                "chunk_id": "chuong-5-do-thi-phan-1:p37:c1:v2",
+                "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+                "page": 37
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-5-do-thi-phan-1:p39:c1:v2",
+            "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+            "page": 39,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          },
+          {
+            "chunk_id": "chuong-5-do-thi-phan-1:p37:c1:v2",
+            "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+            "page": 37,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": true,
+          "final_status": "abstain",
+          "answer_grade": 0,
+          "grounded_final_answer": false,
+          "false_refusal": true,
+          "abstention_correct": false
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 399,
+            "completion_tokens": 76,
+            "total_tokens": 475,
+            "cost": 1.87105e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 498,
+            "completion_tokens": 282,
+            "total_tokens": 780,
+            "cost": 7.2804e-05
+          },
+          "tool_names": []
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 830,
+            "completion_tokens": 285,
+            "total_tokens": 1115,
+            "cost": 8.73e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 8661.070199999813,
+      "token_usage": {
+        "prompt_tokens": 1727,
+        "completion_tokens": 643,
+        "total_tokens": 2370
+      },
+      "actual_cost_usd": 0.0001788145,
+      "estimated_cost_usd": 0.000190846
+    },
+    {
+      "case_id": "t05",
+      "case_index": 5,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_dfad08cdf4bd443698f0faa6",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+          "score": 0.692656697355065,
+          "strategy": "tfidf",
+          "source_id": "chuong-5-do-thi-phan-2",
+          "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+          "page": 30,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-5-do-thi-phan-2:p30:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "theorem",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 5
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-6-cay:p4:c1:v2",
+          "score": 0.35950331809333474,
+          "strategy": "tfidf",
+          "source_id": "chuong-6-cay",
+          "source": "data/discrete_math/raw/Chuong 6. Cay.pdf",
+          "page": 4,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-6-cay:p4:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "theorem",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 6
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-6-cay:p24:c1:v2",
+          "score": 0.30298275032081917,
+          "strategy": "tfidf",
+          "source_id": "chuong-6-cay",
+          "source": "data/discrete_math/raw/Chuong 6. Cay.pdf",
+          "page": 24,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-6-cay:p24:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "theorem",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 6
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-5-do-thi-phan-2:p30:c1:v2",
+          "chuong-6-cay:p4:c1:v2",
+          "chuong-6-cay:p24:c1:v2"
+        ],
+        "character_count": 787,
+        "context_content_omitted": true
+      },
+      "status": "answered",
+      "abstention": false,
+      "failure_type": "",
+      "repair_count": 0,
+      "citations": [
+        {
+          "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+          "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+          "page": 30
+        }
+      ],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "valid_structure_only",
+            "valid": true,
+            "status": "answered",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+                "page": 30
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+            "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+            "page": 30,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": true,
+          "final_status": "answered",
+          "answer_grade": 2,
+          "grounded_final_answer": true,
+          "false_refusal": false,
+          "abstention_correct": false
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 399,
+            "completion_tokens": 43,
+            "total_tokens": 442,
+            "cost": 1.61233e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 529,
+            "completion_tokens": 160,
+            "total_tokens": 689,
+            "cost": 5.1658e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 3267.6880999997593,
+      "token_usage": {
+        "prompt_tokens": 928,
+        "completion_tokens": 203,
+        "total_tokens": 1131
+      },
+      "actual_cost_usd": 6.77813e-05,
+      "estimated_cost_usd": 7.6328e-05
+    },
+    {
+      "case_id": "t06",
+      "case_index": 6,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_2e714fa15a3e46e0afc185be",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+          "score": 0.5353536335523772,
+          "strategy": "tfidf",
+          "source_id": "chuong-2-phep-dem",
+          "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+          "page": 36,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-2-phep-dem:p36:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "example",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 2
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-2-phep-dem:p33:c1:v2",
+          "score": 0.459254070555176,
+          "strategy": "tfidf",
+          "source_id": "chuong-2-phep-dem",
+          "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+          "page": 33,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-2-phep-dem:p33:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "explanation",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 2
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-4-dai-so-boole:p36:c1:v2",
+          "score": 0.20119888451186124,
+          "strategy": "tfidf",
+          "source_id": "chuong-4-dai-so-boole",
+          "source": "data/discrete_math/raw/Chuong 4.  Đai số Boole.pdf",
+          "page": 36,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-4-dai-so-boole:p36:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "explanation",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 4
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-2-phep-dem:p36:c1:v2",
+          "chuong-2-phep-dem:p33:c1:v2"
+        ],
+        "character_count": 747,
+        "context_content_omitted": true
+      },
+      "status": "abstain",
+      "abstention": true,
+      "failure_type": "model_abstention",
+      "repair_count": 0,
+      "citations": [],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "model_abstention",
+            "valid": true,
+            "status": "abstain",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+                "page": 36
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-2-phep-dem:p36:c1:v2",
+            "source": "data/discrete_math/raw/Chuong 2. Phep dem.pdf",
+            "page": 36,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": false,
+          "final_status": "abstain",
+          "answer_grade": null,
+          "grounded_final_answer": false,
+          "false_refusal": false,
+          "abstention_correct": true
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 396,
+            "completion_tokens": 64,
+            "total_tokens": 460,
+            "cost": 1.765e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 513,
+            "completion_tokens": 280,
+            "total_tokens": 793,
+            "cost": 7.3066e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 4501.7619000000195,
+      "token_usage": {
+        "prompt_tokens": 909,
+        "completion_tokens": 344,
+        "total_tokens": 1253
+      },
+      "actual_cost_usd": 9.0716e-05,
+      "estimated_cost_usd": 0.000101474
+    },
+    {
+      "case_id": "t07",
+      "case_index": 7,
+      "split": "test",
+      "controller_decision": "search",
+      "events": [
+        {
+          "event": "controller_decision",
+          "tool_calls": [
+            {
+              "tool_call_id": "call_3daef7b15af340379a3088c9",
+              "function_name": "search_discrete_math",
+              "argument_keys": [],
+              "argument_values_omitted": true
+            }
+          ]
+        },
+        {
+          "event": "search",
+          "tool_calls": []
+        },
+        {
+          "event": "llm_response",
+          "tool_calls": []
+        }
+      ],
+      "retrieval_call": {
+        "function_name": "search_discrete_math",
+        "retriever": "R0 TF-IDF Top-3",
+        "top_k": 3,
+        "context_packing": "C0 <=800 Unicode characters",
+        "context_budget_chars": 800,
+        "query_value_omitted": true
+      },
+      "retrieval_hits": [
+        {
+          "rank": 1,
+          "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+          "score": 0.3316961466957387,
+          "strategy": "tfidf",
+          "source_id": "chuong-5-do-thi-phan-2",
+          "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+          "page": 30,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-5-do-thi-phan-2:p30:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "theorem",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 5
+          }
+        },
+        {
+          "rank": 2,
+          "chunk_id": "chuong-5-do-thi-phan-1:p34:c1:v2",
+          "score": 0.2882702337851151,
+          "strategy": "tfidf",
+          "source_id": "chuong-5-do-thi-phan-1",
+          "source": "data/discrete_math/raw/chuong 5. Do thi (phan 1).pdf",
+          "page": 34,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-5-do-thi-phan-1:p34:c1"
+            ],
+            "extraction_quality": "needs_review",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "definition",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 5
+          }
+        },
+        {
+          "rank": 3,
+          "chunk_id": "chuong-6-cay:p11:c1:v2",
+          "score": 0.2833239414789357,
+          "strategy": "tfidf",
+          "source_id": "chuong-6-cay",
+          "source": "data/discrete_math/raw/Chuong 6. Cay.pdf",
+          "page": 11,
+          "metadata": {
+            "semantic_unit_split": false,
+            "subject": "discrete_math",
+            "chunk_hard_limit_chars": 620,
+            "chunk_target_chars": 500,
+            "v1_chunk_ids": [
+              "chuong-6-cay:p11:c1"
+            ],
+            "extraction_quality": "ok",
+            "encoding_confidence": 0.9,
+            "ingestion_version": "v2",
+            "content_type": "definition",
+            "approved_v2_sha256": "979a0baaf2f34735592bde1aeaf2bdb29b5a8f336f3f0bcb3fee699056f57990",
+            "encoding_detected": null,
+            "semantic_over_target": false,
+            "chapter": 6
+          }
+        }
+      ],
+      "selected_context_metadata": {
+        "chunk_ids": [
+          "chuong-5-do-thi-phan-2:p30:c1:v2",
+          "chuong-5-do-thi-phan-1:p34:c1:v2"
+        ],
+        "character_count": 628,
+        "context_content_omitted": true
+      },
+      "status": "abstain",
+      "abstention": true,
+      "failure_type": "model_abstention",
+      "repair_count": 0,
+      "citations": [],
+      "citation_validation": {
+        "automatic_events": [
+          {
+            "event": "llm_response",
+            "validation": "model_abstention",
+            "valid": true,
+            "status": "abstain",
+            "citation_items": [
+              {
+                "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+                "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+                "page": 30
+              }
+            ]
+          }
+        ],
+        "manual_pdf_checks": [
+          {
+            "chunk_id": "chuong-5-do-thi-phan-2:p30:c1:v2",
+            "source": "data/discrete_math/raw/Chuong 5. Do thi (phan 2).pdf",
+            "page": 30,
+            "context_metadata_match": true,
+            "pdf_page_checked": true,
+            "semantic_support": true
+          }
+        ],
+        "manual_review": {
+          "answerable": false,
+          "final_status": "abstain",
+          "answer_grade": null,
+          "grounded_final_answer": false,
+          "false_refusal": false,
+          "abstention_correct": true
+        }
+      },
+      "llm_calls": [
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Relace",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            },
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": false
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 399,
+            "completion_tokens": 237,
+            "total_tokens": 636,
+            "cost": 3.13329e-05
+          },
+          "tool_names": [
+            "search_discrete_math"
+          ]
+        },
+        {
+          "model_returned": "z-ai/glm-5.3-flash",
+          "providers": [
+            {
+              "provider": "Wafer",
+              "model": "z-ai/glm-5.3-flash-20260826",
+              "selected": true
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 481,
+            "completion_tokens": 214,
+            "total_tokens": 695,
+            "cost": 5.9578e-05
+          },
+          "tool_names": []
+        }
+      ],
+      "latency_ms": 4721.189699999741,
+      "token_usage": {
+        "prompt_tokens": 880,
+        "completion_tokens": 451,
+        "total_tokens": 1331
+      },
+      "actual_cost_usd": 9.09109e-05,
+      "estimated_cost_usd": 0.000119944
+    }
+  ],
+  "metadata_policy": "Structured bibliographic and extraction metadata is retained; free-text quality rationale is omitted to avoid source-derived wording.",
+  "manual_final_test_metrics": {
+    "evaluation_source": "saved final evaluation aggregate and manual audit; not recomputed from the trace",
+    "grounded_answer_rate": {
+      "n": 3,
+      "N": 5,
+      "rate": 0.6
+    },
+    "abstention_accuracy": {
+      "count": 2,
+      "total": 2
+    },
+    "false_refusal": {
+      "count": 2,
+      "total": 5
+    },
+    "tool_use": {
+      "count": 7,
+      "total": 7
+    },
+    "citation_structure_valid_final_answers": {
+      "n": 3,
+      "N": 3
+    },
+    "semantic_citation_support_final_references": {
+      "n": 3,
+      "N": 3
+    },
+    "actual_cost_usd": 0.0006918935
+  }
+}

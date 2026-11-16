@@ -28,7 +28,7 @@ LAB07_OUTPUT_USD_PER_1M=0.184
 LAB07_EXTERNAL_CORPUS_OK=1
 ```
 
-Chỉ bật `LAB07_EXTERNAL_CORPUS_OK=1` sau khi xác minh quyền gửi nội dung tài liệu tới API ngoài. Repo hiện chưa lưu giấy phép phân phối các PDF; việc gửi context trong runs đã hoàn thành dựa trên xác nhận của người dùng.
+Chỉ bật `LAB07_EXTERNAL_CORPUS_OK=1` sau khi có xác nhận quyền gửi nội dung tài liệu tới API ngoài. Theo xác nhận của người nộp, giáo viên cho phép sử dụng tài liệu cho Lab 07/nộp cho giảng viên; đây là phạm vi sử dụng học thuật, không phải quyền công khai toàn bộ PDF hoặc chunks. Việc gửi context trong run đã hoàn thành dựa trên xác nhận riêng của người dùng. Repo hiện public và có một số evidence excerpts đã track; cần xác nhận riêng phạm vi public của các excerpt đó.
 
 ## 2. Ingestion và indexing
 
@@ -120,4 +120,4 @@ git diff --check
 
 Test suite có một integration test pgvector chỉ chạy khi bật `RUN_LIVE_V2_TESTS=1`; không bật biến này trong unit-test pass thường.
 
-`.gitignore` loại `.env`, `data/discrete_math/raw/`, `starter/data/` và `starter/results/`. Không force-add PDF, chunks V2, raw traces hoặc context. Benchmark JSON hiện đang được track và chứa evidence excerpts; phải xử lý quyền chia sẻ trước khi push ra remote. Xem [checklist nộp](../SUBMISSION_CHECKLIST.md) để biết allowlist an toàn/conditional.
+`.gitignore` loại `.env`, `data/discrete_math/raw/`, `starter/data/` và `starter/results/`. Không force-add PDF, chunks V2, raw traces hoặc context. Benchmark JSON hiện đang được track và chứa evidence excerpts. Quyền sử dụng cho bài học/nộp giảng viên đã được người nộp xác nhận; việc public các excerpt và toàn bộ tài liệu chưa được xác nhận riêng. Xem [checklist nộp](../SUBMISSION_CHECKLIST.md) để biết allowlist và giới hạn quyền.
