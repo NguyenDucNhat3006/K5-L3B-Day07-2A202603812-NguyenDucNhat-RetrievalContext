@@ -4,6 +4,7 @@ __pycache__/
 .env
 .env.*
 !.env.example
+.private_submission/
 .codex-log/
 
 # Local datasets and generated output; share permitted artifacts deliberately

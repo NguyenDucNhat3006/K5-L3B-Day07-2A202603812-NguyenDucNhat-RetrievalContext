@@ -15,7 +15,9 @@ This repository contains the Day 07 Discrete Math retrieval and agent submission
 | Dev (17; 15 answerable) | 12/15 (80%) | 2/2 | 17/17 | $0.0013042941 |
 | Test (7; 5 answerable), one pass | 3/5 (60%) | 2/2 | 7/7 | $0.0006918935 |
 
-Final test also used 16 LLM calls (including two repairs), 10,363 tokens, and mean/median latency 4.952/4.502 seconds. The A1 final test was run exactly once. Do not rerun it or use its outcomes to tune the configuration. See [the per-case audit](report/individual/agent_final_evaluation_test.md), [sanitized trace](artifacts/final_test_trace_sanitized.json), and [public manifest](artifacts/final_test_manifest_public.json). The complete raw trace remains local and ignored.
+Final test also used 16 LLM calls (including two repairs), 10,363 tokens, and mean/median latency 4.952/4.502 seconds. The A1 final test was run exactly once. Do not rerun it or use its outcomes to tune the configuration. See [the per-case audit](report/individual/agent_final_evaluation_test.md), [sanitized trace](artifacts/final_test_trace_sanitized.json), and [public manifest](artifacts/final_test_manifest_public.json). The complete raw trace remains local-only. A restricted instructor copy, with account-specific spending-limit fields redacted from its manifest copy, is prepared under `.private_submission/`; this directory is excluded locally through `.git/info/exclude` and is not a public artifact. The reported permission covers course use and submission to the instructor; it does not establish public redistribution rights for PDFs or arbitrary excerpts.
+
+A separate A0 retrospective pass on the already-opened test completed once: GAR 0/5, correct abstention 2/2, tool use 7/7, 14 calls, 7,049 tokens, and $0.0004882121 actual cost. It is not an independent evaluation and does not change A1's official 3/5 test GAR. See the [A0/A1 audit and comparison](report/individual/agent_a0_retrospective_test.md); raw A0 traces and audit remain in the Git-ignored `starter/results/` run directory.
 
 ## Setup and commands
 
@@ -36,6 +38,8 @@ Live retrieval requires the Lab 06 Python environment, PostgreSQL 16 with pgvect
 - [A1 agent dev evaluation](report/individual/agent_evaluation_dev.md)
 - [A2 R0/R1/R2 dev comparison](report/individual/retrieval_a2_dev.md)
 - [Final test audit and case telemetry](report/individual/agent_final_evaluation_test.md)
+- [A0 retrospective test evaluation and audit](report/individual/agent_a0_retrospective_test.md)
+- [A0 retrospective plan and execution record](report/individual/a0_retrospective_test_plan.md)
 - [Submission readiness review](report/individual/submission_readiness_review.md)
 
 ## Data and permission scope

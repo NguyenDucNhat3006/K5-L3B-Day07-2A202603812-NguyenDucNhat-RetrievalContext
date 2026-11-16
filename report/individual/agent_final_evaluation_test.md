@@ -36,7 +36,11 @@ Người dùng đã xác nhận riêng quyền gửi context corpus tới OpenRo
 | LLM calls / repairs | 16 / 2 | Trần 21 calls; tối đa một repair/câu |
 | Chi phí API thực tế | **$0.0006918935** | Tổng `usage.cost` từ response OpenRouter; ước lượng theo price caps là $0.000788258 |
 
-Định tuyến thực tế báo `z-ai/glm-5.3-flash` ở response metadata (OpenRouter bỏ hậu tố alias trong trường `model`); endpoint providers được chọn là **Relace (7 calls)** và **Wafer (9 calls)**. Key có giới hạn chi tiêu $50; trước run còn $49.997510406 và sau run còn $49.996818516. Run vẫn áp dụng hard cap cục bộ $0.10, 21 calls, 20,000 tokens.
+### Retrieval coverage scored from the frozen test trace
+
+This is a post-hoc scoring pass over the immutable A1 retrieval hits and selected context; it did not rerun retrieval or call an API. Using the same exact chunk ID, source ID, page, and whitespace-normalized evidence quote checks as the dev evaluator, the unchanged gold locations score Hit@1 **5/5**, Evidence Hit@3 **5/5**, and C0 Context Evidence Rate **5/5** on the five answerable cases. The two intentionally unanswerable cases are excluded. This retrieval coverage does not imply that the generated answer was grounded: t02 and t04 had sufficient context but failed citation validation and received answer grade 0.
+
+The run stayed within the local hard caps: $0.10, 21 calls, and 20,000 tokens. Account limit and balance details have been omitted from the public report.
 
 ## So sánh Agent A1 dev/test
 
@@ -52,6 +56,8 @@ Người dùng đã xác nhận riêng quyền gửi context corpus tới OpenRo
 | Tokens | 20,772 | 10,363 |
 | API calls | 35 | 16 |
 | Chi phí thực tế | $0.0013042941 | $0.0006918935 |
+
+
 
 Test giảm 20 điểm phần trăm Grounded Answer Rate so với dev; mẫu test chỉ có 5 câu answerable nên một câu tương ứng 20 điểm phần trăm. Tỷ lệ false refusal tăng từ 20% lên 40%. Đây là kết quả độc lập trên test, không dùng để chọn/thay cấu hình. Citation validity và semantic support ở trên là hai kiểm tra khác nhau: verifier chủ yếu đảm bảo JSON, citation inline và đúng metadata; support được audit bằng PDF.
 
@@ -119,9 +125,11 @@ Per BENCHMARK, context grade 0 means no evidence, 1 means partial evidence or mi
 
 Context grade distribution for t01-t05: **0:0, 1:0, 2:5**. Answer grade distribution for the five answerable cases: **0:2 (t02,t04), 1:0, 2:3 (t01,t03,t05)**; mean 1.2/2 and GAR 3/5. Sufficient context does not guarantee a valid released answer: t02/t04 have context grade 2 but answer grade 0 because validation rejected the output.
 
-## A0 test baseline coverage gap
+## A0 retrospective baseline comparison
 
-The inspected local results contain A0/baseline dev runs but no A0 test trace. The only test trace is `agent-a1-final-test-20261116T082303799998Z`, with seven cases t01-t07. Therefore the same-test A0 baseline versus selected A1 comparison requested by BENCHMARK sections 2-3 is incomplete. Do not infer A0 test GAR from 9/15 dev or A1 test GAR. Running frozen pre-test A0 code against the already-opened test could only be labeled a post-hoc descriptive comparison, not an independent result. A fresh untouched test set is required for an independent baseline comparison. This review did not run A0.
+A0 was subsequently run once on the same seven already-opened test questions, using the recovered A0 prompt/tool, the locked GLM model, R0 TF-IDF Top-3 and C0 800. It is a retrospective paired comparison, not an independent test. A0 completed 7/7, retrieved and packed gold evidence for 5/5 answerable cases, but all five final answers were abstentions (GAR 0/5; false refusal 5/5). Both missing-evidence cases abstained correctly (2/2). A0 tool use was 7/7; it used 14 API calls, 7,049 tokens and $0.0004882121 actual cost. The official A1 result remains 3/5 GAR, abstention 2/2 and tool use 7/7; it was not rerun or modified.
+
+The A0 draft citations had correct chunk/source/page metadata and their nine primary cited claims were supported on the PDF pages, but none of the five answerable drafts passed inline citation validation. A0 produced no final citations, so final citation structure and semantic support are 0/0 (not applicable). Context grades were 2/2 on t01-t05. Full manual audit, per-case failure reasons, run hashes and the A0/A1 comparison are in [the A0 retrospective report](agent_a0_retrospective_test.md). The code/prompt provenance caveat remains: prompt/tool hashes match historical commits, but the original A0 runner/API adapter snapshot was not recorded in its dev manifest and cannot be proven identical.
 
 ## Per-case telemetry
 
@@ -141,7 +149,7 @@ There was one retrieval tool call for each test question (7/7) and 16 LLM/API ca
 
 `artifacts/final_test_trace_sanitized.json` contains seven cases and 21 retrieval hits, with metadata, controller/tool events, citation validation, provider, latency, tokens, and cost. It excludes query text, answer text, chunk text, raw context, evidence notes, free-form tool arguments, and credentials. Run ID, hit locators and aggregates match the frozen raw run; public manifest hashes match the raw artifacts. This sanitized artifact supports structural/run review but cannot independently verify semantic grounding.
 
-The course submission instructions request per-query query, context, answer, citations, errors, timing and cost. These remain in the full local run under ignored `starter/results/`. If the instructor needs them, use a restricted course/LMS channel covered by the permission. Do not publish raw traces unless permission explicitly covers all their contents.
+The course submission instructions request per-query query, context, answer, citations, errors, timing and cost. The A1 and A0 raw traces, metrics and audits remain in separate local runs under ignored `starter/results/`; the A0 retrospective report summarizes the newly completed pass. A separate local-only instructor bundle is prepared in `../../.private_submission/agent-a1-final-test-20261116T082303799998Z/`; it includes byte-identical trace/metrics/audit files and a manifest copy with account-specific spending-limit details removed. The bundle README and SHA256 list describe verification. If the instructor needs them, use a restricted course/LMS channel covered by the permission. Do not publish raw traces unless permission explicitly covers all their contents.
 
 ## Demo sequence (saved evidence; no API call)
 

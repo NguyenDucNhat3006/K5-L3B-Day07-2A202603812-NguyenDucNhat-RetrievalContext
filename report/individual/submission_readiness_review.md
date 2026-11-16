@@ -4,9 +4,9 @@
 
 ## Executive result
 
-The selected A1/R0/C0 evaluation is reproducibly described and its one-pass final test has 7 case traces locally. Saved results remain **Dev GAR 12/15 (80%)**, **Test GAR 3/5 (60%)**, Test correct abstention **2/2**, Test tool use **7/7**, Test cost **$0.0006918935**. The test grade distribution is 0:2, 1:0, 2:3. There is no A0 test run in the inspected local result inventory, so the official same-test baseline/selected comparison is incomplete. Do not infer an A0 test score from dev.
+The selected A1/R0/C0 evaluation is reproducibly described and its one-pass final test has 7 case traces locally. Saved results remain **Dev GAR 12/15 (80%)**, **Test GAR 3/5 (60%)**, Test correct abstention **2/2**, Test tool use **7/7**, Test cost **$0.0006918935**. The test grade distribution is 0:2, 1:0, 2:3. A0 now has one completed retrospective pass on the same opened seven-case test. Its results are descriptive only and do not constitute an independent baseline. A1 official results remain unchanged.
 
-The workspace started clean at `HEAD=origin/main=5e0c82ffd17a0cbcf7e3e2ed401f8375b4aaa831`; the documentation changes listed below are local and uncommitted. This review makes no claim that the public GitHub repository is safe for unrestricted redistribution: instructor permission is reported for Lab 07/course submission, while public sharing of source excerpts remains unverified.
+This review started at `HEAD=origin/main=f13cc75621eabc7b40a563cdea4f1ea767368abe`; current documentation changes are local, uncommitted and unpushed. This review makes no claim that the public GitHub repository is safe for unrestricted redistribution: instructor permission is reported for Lab 07/course submission, while public sharing of source excerpts remains unverified.
 
 ## Official requirement traceability
 
@@ -15,10 +15,10 @@ The workspace started clean at `HEAD=origin/main=5e0c82ffd17a0cbcf7e3e2ed401f837
 | Reuse Day 6 chunks/IDs/model/store, record dimensions and connection ([GUIDE section 1, lines 3-7](../../GUIDE.md#1-chuan-bi)) | `report/individual/2A202603812_NguyenDucNhat.md` section 1; `starter/index_discrete_math_v2.py`; final public manifest configuration/hashes | **Met with data-coverage limitation** | Model is MiniLM multilingual, 384d; PostgreSQL 16/pgvector; V2 strategy separate. Corpus has 9 PDFs/389 pages; expected Ch.3 PPT/PPTX is missing. |
 | At least 3 distinct retrieval methods incl. dense and traceable IDs/rank/score/source/page/metadata ([GUIDE section 2, lines 9-24](../../GUIDE.md#2-thu-cac-phuong-phap-retrieval)) | `starter/retrieval_v2.py` methods `dense`, `tfidf`, `hybrid`; `report/individual/retrieval_v2_dev_comparison.md`; final sanitized trace | **Met** | Same V2 IDs/metadata. Dense/Hybrid reproduction depends on external local DB/model setup. |
 | Real model controller/tool, context, citation and missing-evidence handling ([GUIDE section 3, lines 26-32](../../GUIDE.md#3-thiet-ke-agent-va-context)) | `starter/agent_a1.py`, `starter/agent_v2.py`, `starter/context_engineering_v2.py`; final report sections 2-3 | **Met with semantic-audit limitation** | Function calling is real. Validator checks citation form/identity/source/page and context membership; semantic support is a separate human audit. |
-| Split sizes, no gold in retrieval, dev selection and frozen test ([BENCHMARK section 1, lines 5-17](../../BENCHMARK.md#1-bo-cau-hoi)) | `data/benchmark_v2_manifest.json`; retrieval/A2 reports; final test manifest | **Met for selected run; coverage gap** | 15+2 dev and 5+2 test; one A1 test pass. A0 test baseline is absent, so same-test baseline/selected comparison required by [BENCHMARK section 3, lines 29-40](../../BENCHMARK.md#3-agent-va-cau-tra-loi) is incomplete. |
-| Hit@1/Evidence Hit@3, context rate, latency/cost, and manual context grades ([BENCHMARK section 2, lines 19-27](../../BENCHMARK.md#2-so-sanh-retrieval-va-context)) | `report/individual/retrieval_v2_dev_comparison.md`, `context_engineering_dev.md`, final audit context table | **Met for saved dev and selected-test context audit** | t01 through t05 C0 contexts graded 2/2 each. There is no A0 test context to grade. |
+| Split sizes, no gold in retrieval, dev selection and frozen test ([BENCHMARK section 1, lines 5-17](../../BENCHMARK.md#1-bo-cau-hoi)) | `data/benchmark_v2_manifest.json`; retrieval/A2 reports; final test manifest | **Met with retrospective caveat** | 15+2 dev and 5+2 test. One A1 final run and one user-approved A0 retrospective run on the same opened test now exist. The A0 comparison is not independent because the test was previously opened. |
+| Hit@1/Evidence Hit@3, context rate, latency/cost, and manual context grades ([BENCHMARK section 2, lines 19-27](../../BENCHMARK.md#2-so-sanh-retrieval-va-context)) | `report/individual/retrieval_v2_dev_comparison.md`, `context_engineering_dev.md`, final audit context table | **Met for saved dev and both test traces** | t01 through t05 C0 contexts were graded 2/2 for both A0 and A1; post-hoc exact evidence scoring is 5/5 for Hit@1, Evidence Hit@3 and Context Evidence Rate in each run. |
 | Grounded 0/1/2, citations must be in context and support answer, abstention and tool-use ([BENCHMARK section 3, lines 29-42](../../BENCHMARK.md#3-agent-va-cau-tra-loi)) | Local frozen `audit_manual.json` and trace; summary in `agent_final_evaluation_test.md`; sanitized public trace | **Met for A1; restricted raw evidence** | Test distribution 0:2/1:0/2:3; final citation references 3/3 structurally valid and manually supported among released answers; 2/5 false refusals. Full query/context/answer audit should be provided via restricted instructor channel. |
-| Six basic rubric categories/weights ([RUBRIC lines 3-15](../../RUBRIC.md#phan-co-ban--85-diem)) | This table and reports linked in checklist | **Partially evidenced; no self-awarded score** | Data/benchmark 13, retrieval 17, agent/context 17, evaluation 17, experiments 13, reproducibility/report 8; total 85. This review maps evidence but does not claim maximum marks. |
+| Six basic rubric categories and subcriteria ([RUBRIC lines 3-15](../../RUBRIC.md#phan-co-ban--85-diem)) | SUBMISSION_CHECKLIST.md detailed 85-point map; reports and code linked there | **Evidence mapped; no self-awarded score** | Exact split: Data/benchmark 6+7; Retrieval 10+7; Agent/context 9+8; Evaluation 9+8; Experiments 5+5+3; Reproducibility/report 5+3 = 85. Limits remain: missing expected PPT, retrospective A0 is not independent, full raw traces are restricted, and public source-excerpt permission is unverified. Component evidence and boundaries are stated in the checklist; no maximum score is claimed. |
 | No fabrication, same corpus/questions, dev-only tuning, permitted data ([RULES lines 1-8](../../RULES.md)) | Frozen manifests/hashes, separate dev runs, permission notes; no test edits in this review | **Met with rights condition** | Teacher permission is only reported at course/submission scope. Public redistribution of individual excerpts remains to be verified. |
 | Submission package includes code, 3 retrieval methods, data/rebuild access, 20 answerable +4 missing, per-query traces and 2 improvement variants ([SUBMISSION lines 17-25](../../SUBMISSION.md#danh-sach-bai-nop)) | Code, 22 questions total (15+5 answerable and 2+2 missing), two dev improvements, reports, sanitized trace; raw trace ignored | **Partial** | Public sanitized trace intentionally omits query/context/answer. If evaluator requires those fields, deliver raw trace privately under course access controls. The course benchmark minimum is met; current data-source tenth file remains absent. |
 | Optional advanced 100-page/90% challenge ([RUBRIC lines 17-21](../../RUBRIC.md#thu-thach-nang-cao--15-diem)) | No separate challenge evidence | **Not attempted** | No bonus claimed. |
@@ -42,7 +42,7 @@ Line numbers below refer to the reviewed working tree at this audit and are prov
 
 ## Final test and context audit
 
-The raw local run `starter/results/discrete_math_v2/agent-a1-final-test-20261116T082303799998Z/` was read without modifying it. It has 7 test cases, 21 Top-3 hits, 7 retrieval calls, 16 LLM calls (including two repair calls), 10,363 tokens, mean/median latency 4,951.95/4,501.76 ms, and actual cost $0.0006918935. There were no API transport failures. t02 and t04 ended in repair/citation validation failure; they are false refusals although evidence was present. t06/t07 abstained correctly.
+The raw local run `starter/results/discrete_math_v2/agent-a1-final-test-20261116T082303799998Z/` was read without modifying it. It has 7 test cases, 21 Top-3 hits, 7 retrieval calls, 16 LLM calls (including two repair calls), 10,363 tokens, mean/median latency 4,951.95/4,501.76 ms, and actual cost $0.0006918935. Post-hoc scoring of the frozen trace against the unchanged gold gives Hit@1 5/5, Evidence Hit@3 5/5, and C0 Context Evidence Rate 5/5 over the five answerable cases; this is not a retrieval rerun and does not change the official A1 answer result (GAR 3/5). There were no API transport failures. t02 and t04 ended in repair/citation validation failure; they are false refusals although evidence was present. t06/t07 abstained correctly.
 
 | Case | C0 length / 800 | Context locators | Context grade | Answer grade / finding |
 |---|---:|---|---:|---|
@@ -54,9 +54,9 @@ The raw local run `starter/results/discrete_math_v2/agent-a1-final-test-20261116
 
 Context grade distribution for t01 through t05 is 0:0, 1:0, 2:5. Answer-grade distribution is 0:2, 1:0, 2:3 (mean 1.2/2). Context sufficiency is not answer quality. `needs_review` stays attached to the t02 source chunk; this audit only confirms that its readable relevant text supports this particular answer, without reconstructing any missing figure/table.
 
-### A0 test gap and independence
+### A0 retrospective test and independence
 
-The local result inventory contains baseline/A0 dev results and one final test run, which is A1. No A0 test trace/run was found. The selected A1 test was run once and is preserved. Running frozen pre-test A0 code on those same test questions now would be a post-hoc descriptive comparison because the questions/results have already been opened; it cannot be presented as a pristine independent baseline test. To obtain an independent comparison, freeze A0 and A1 and evaluate both on a new untouched test set with criteria locked in advance. This review does not run either option.
+A0 was run once on all seven test cases at `starter/results/discrete_math_v2/agent-a0-retro-test-20261116T151349722949Z/`. It completed 7/7 with 14 calls, 7,049 tokens and $0.0004882121 actual cost. A0 GAR was 0/5; correct abstention was 2/2; false refusal was 5/5; tool use was 7/7. Hit@1, Evidence Hit@3 and Context Evidence Rate were each 5/5 on the answerable cases, and t01-t05 context grades were all 2. The drafts passed citation metadata checks but none of the answerable drafts passed inline citation validation, so the final agent abstained. A1 remains unchanged at 3/5 GAR, 2/2 abstention, 7/7 tool use and $0.0006918935. Because the test was previously opened, the A0 comparison is retrospective and not independent. Prompt/tool match historical hashes; original A0 runner/API adapter provenance is not fully provable. See [the A0 case audit](agent_a0_retrospective_test.md).
 
 ### Sanitized evidence package
 
@@ -66,10 +66,10 @@ The local result inventory contains baseline/A0 dev results and one final test r
 
 ## Experiments and failure analysis
 
-- **A0 to A1 (dev only):** GAR improved from 9/15 to 12/15 and false refusal decreased from 6/15 to 3/15 under the same model/retrieval/context. The A1 JSON and per-claim citation instructions fixed d04/d06/d13 dev outcomes; d01/d03 remained retrieval misses and d14 remained a citation repair failure. Repair is not credited as the cause of all gains. A0 test is missing.
+- **A0 to A1 (dev only):** GAR improved from 9/15 to 12/15 and false refusal decreased from 6/15 to 3/15 under the same model/retrieval/context. The A1 JSON and per-claim citation instructions fixed d04/d06/d13 dev outcomes; d01/d03 remained retrieval misses and d14 remained a citation repair failure. Repair is not credited as the cause of all gains. A0 retrospective test on the opened split scored 0/5 GAR versus A1 3/5; it is descriptive, not independent, and retrieval/context evidence was 5/5 for both.
 - **A2 R0/R1/R2:** R1 query expansion and R2 candidate expansion/reranking did not improve aggregate dev metrics over R0; R2 moved d14 ranking but did not resolve d01/d03 overall. R0 was retained for simplicity.
 - **C0/C1:** Saved dev audit rates C0 above C1 (context evidence 13/15 vs 12/15; mean context quality 1.733 vs 1.667 on 0-2 scale). C0 is the selected 800-character configuration.
-- **Test degradation:** GAR is 80% dev versus 60% test on a very small answerable sample; one question changes test GAR by 20 percentage points. t02/t04 show the difference between adequate retrieved context and successful citation-validated output.
+- **A0/A1 retrospective test:** both runs retrieved sufficient evidence for all five answerable questions. A0 failed to issue every answer because inline-citation validation rejected its drafts (0/5 GAR); A1 issued three supported answers (3/5). This is descriptive, not causal: provider mix and A0 runner provenance differ. The official A1 test was run once and preserved.
 - **Known limits:** 332 chunks from 9 PDFs/389 pages, missing expected Ch.3 PPT/PPTX; 256 chunks flagged `needs_review`; extraction may lose formula, matrix, table or graph structure. TF-IDF Vietnamese tokenization is simple. Semantic citation validation is manual. No 100-page advanced challenge. Permission is scoped; no redistribution license is claimed.
 
 ## Source and repository access
@@ -98,15 +98,15 @@ Use the restricted trace for query/answer/context detail if required. Do not cal
 
 ## Files changed in this local review
 
-- `README.md` - corrected Day 07 identity/scope, results and links.
-- `starter/README.md` - architecture, setup, safe command boundaries and reproducibility requirements.
-- `SUBMISSION_CHECKLIST.md` - current Git checkpoint, rubric mapping, data permission, trace access and A0 gap.
-- `report/individual/agent_final_evaluation_test.md` - context/answer grade distributions, per-case telemetry, A0 gap, trace scope and demo.
-- `report/individual/2A202603812_NguyenDucNhat.md` - A0 test gap and semantic-vs-structural citation precision.
-- `report/individual/submission_readiness_review.md` - this audit.
+- `.gitignore` - excludes `.private_submission/`.
+- `README.md` and `SUBMISSION_CHECKLIST.md` - link A0 retrospective evaluation and state its caveat/results.
+- `starter/run_agent_a0_retro_test.py` and `tests/test_a0_retro_runner.py` - one-shot bounded runner and offline safeguards tests.
+- `report/individual/agent_a0_retrospective_test.md` - new case audit and A0/A1 comparison.
+- `report/individual/a0_retrospective_test_plan.md` - plan updated with actual execution record.
+- `report/individual/agent_final_evaluation_test.md`, `report/individual/2A202603812_NguyenDucNhat.md`, and this review - append actual A0 results without changing A1 metrics.
 
-These are proposed documentation-only commit candidates; none have been staged. Do not commit/push until the user reviews public-scope implications and approves the diff.
+Raw traces, run metrics and manual audit remain under the Git-ignored `starter/results/`. `.private_submission/` is Git-ignored both by `.gitignore` and the local exclude. No files are staged, committed or pushed.
 
 ## Checks performed
 
-Pending execution at time of writing: unit tests, compileall, Markdown links, JSON parsing, secret scan, `git diff --check`, and final Git status. Results will be appended after those checks. No benchmark, API, database, or re-embedding run is permitted in this review.
+Final validation after this work: 57 unit tests passed and 1 opt-in PostgreSQL test skipped; compileall, all reviewed local Markdown links, A0/A1 JSON and manifest/output hashes, `.private_submission/` ignore, secret scan, and `git diff --check` passed. No A1 rerun, additional A0 API pass, database access or re-embedding occurred.
